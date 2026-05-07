@@ -332,12 +332,13 @@
     .outline-panel__head {
       display: flex;
       align-items: center;
-      padding: 0 0 4px;
+      min-height: 26px;
+      padding: 0 0 10px;
     }
     .outline-panel__head-title {
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 600;
-      line-height: 22px;
+      line-height: 20px;
       color: var(--gs-80);
     }
 
@@ -349,21 +350,22 @@
     .outline-sections {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .outline-section {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 4px;
     }
 
     .outline-section__label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      color: var(--gs-60);
+      color: var(--gs-50);
       text-transform: uppercase;
-      padding: 4px 0 8px;
+      letter-spacing: 0.05em;
+      padding: 10px 0 4px;
       line-height: 16px;
     }
 
@@ -378,7 +380,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px;
+      padding: 6px 8px;
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.1s;
@@ -495,7 +497,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 8px;
+      padding: 6px 8px;
       cursor: pointer;
       font-size: 12px;
       font-weight: 600;
@@ -1641,7 +1643,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 14px 14px 0;
+      padding: 16px 12px 10px;
       flex-shrink: 0;
     }
     .add-panel-header__back {
@@ -2138,7 +2140,7 @@
 
       <!-- ══ MAIN VIEW ══ -->
       <div class="add-panel-view active" id="sec-view-main">
-        <div class="add-panel-header" style="padding:14px 14px 10px;">
+        <div class="add-panel-header">
           <button class="add-panel-header__back" onclick="closeAddPanel()" aria-label="Back">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -2221,7 +2223,7 @@
 
       <!-- ══ PRE-BUILT VIEW ══ -->
       <div class="add-panel-view" id="sec-view-prebuilt">
-        <div class="add-panel-header" style="padding:14px 14px 0;">
+        <div class="add-panel-header">
           <button class="add-panel-header__back" onclick="showSectionView('main')" aria-label="Back">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -2348,7 +2350,7 @@
 
       <!-- ══ EMPTY SECTION VIEW ══ -->
       <div class="add-panel-view" id="sec-view-scratch">
-        <div class="add-panel-header" style="padding:14px 14px 10px;">
+        <div class="add-panel-header">
           <button class="add-panel-header__back" onclick="showSectionView('main')" aria-label="Back">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -2395,7 +2397,7 @@
 
       <!-- ══ CUSTOM CODE VIEW ══ -->
       <div class="add-panel-view" id="sec-view-code">
-        <div class="add-panel-header" style="padding:14px 14px 12px;">
+        <div class="add-panel-header">
           <button class="add-panel-header__back" onclick="showSectionView('main')" aria-label="Back">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -2417,7 +2419,7 @@
 
     <!-- ── Add panel ── -->
     <div class="add-element-panel" id="add-element-panel">
-      <div class="add-panel-header" style="padding:14px 14px 10px;">
+      <div class="add-panel-header">
         <span class="add-panel-header__title">Add block</span>
         <button class="add-panel-header__close" onclick="closeAddElementPanel()" aria-label="Close">
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
