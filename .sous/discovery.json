@@ -1,3 +1,9 @@
 {
-  "features_used": []
+  "features_used": [],
+  "setup_complete": true,
+  "sessions_since_setup": 2,
+  "tips_shown": [
+    "morning_brief",
+    "meeting_prep"
+  ]
 }
