@@ -322,7 +322,11 @@
       flex-direction: column;
       gap: 8px;
       max-height: calc(100% - 48px);
-      overflow-y: auto;
+      overflow: hidden;
+    }
+    .outline-panel--add-mode {
+      padding: 0;
+      gap: 0;
     }
 
     .outline-panel__head {
@@ -1990,6 +1994,9 @@
     <!-- Outline Panel -->
     <div class="outline-panel" id="outline-panel">
 
+      <!-- VIEW: Outline -->
+      <div id="outline-main-view" style="display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto;">
+
       <!-- Heading -->
       <div class="outline-panel__head">
         <span class="outline-panel__head-title">Outline</span>
@@ -2124,14 +2131,17 @@
 
       </div><!-- /outline-sections -->
 
-    </div><!-- /outline-panel -->
+      </div><!-- /outline-main-view -->
 
-    <!-- ── Add Section picker panel ── -->
-    <div class="add-section-panel" id="add-section-panel">
+      <!-- VIEW: Add section (embedded) -->
+      <div id="outline-add-view" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
 
       <!-- ══ MAIN VIEW ══ -->
       <div class="add-panel-view active" id="sec-view-main">
         <div class="add-panel-header" style="padding:14px 14px 10px;">
+          <button class="add-panel-header__back" onclick="closeAddPanel()" aria-label="Back">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
           <span class="add-panel-header__title">Add section</span>
           <button class="add-panel-header__close" onclick="closeAddPanel()" aria-label="Close">
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -2401,7 +2411,9 @@
         </div>
       </div><!-- /code view -->
 
-    </div><!-- /add-section-panel -->
+      </div><!-- /outline-add-view -->
+
+    </div><!-- /outline-panel -->
 
     <!-- ── Add panel ── -->
     <div class="add-element-panel" id="add-element-panel">
@@ -4180,26 +4192,34 @@
       btn.classList.add('active');
     }
 
-    /* ── Add-section picker ── */
-    const addSectionPanel = document.getElementById('add-section-panel');
+    /* ── Add-section picker (embedded in outline panel) ── */
+    const outlineMainView  = document.getElementById('outline-main-view');
+    const outlineAddView   = document.getElementById('outline-add-view');
+    const outlinePanel     = document.getElementById('outline-panel');
+    // Keep alias so filterComponents / showSectionView can still query within the add view
+    const addSectionPanel  = outlineAddView;
 
     function openAddPanel() {
       closePropPanel();
       showSectionView('main');
-      addSectionPanel.classList.add('open');
+      outlineMainView.style.display = 'none';
+      outlineAddView.style.display  = 'flex';
+      outlinePanel.classList.add('outline-panel--add-mode');
     }
 
     function closeAddPanel() {
-      addSectionPanel.classList.remove('open');
+      outlineAddView.style.display  = 'none';
+      outlineMainView.style.display = '';
+      outlinePanel.classList.remove('outline-panel--add-mode');
     }
 
     function showSectionView(viewId) {
-      addSectionPanel.querySelectorAll('.add-panel-view').forEach(v => v.classList.remove('active'));
+      outlineAddView.querySelectorAll('.add-panel-view').forEach(v => v.classList.remove('active'));
       const target = document.getElementById('sec-view-' + viewId);
       if (target) target.classList.add('active');
       // Reset search when entering prebuilt view
       if (viewId === 'prebuilt') {
-        const inp = addSectionPanel.querySelector('.add-section-panel__search-input');
+        const inp = outlineAddView.querySelector('.add-section-panel__search-input');
         if (inp) { inp.value = ''; filterComponents(''); }
       }
     }
@@ -4211,11 +4231,11 @@
 
     function filterComponents(query) {
       const q = (query || '').toLowerCase().trim();
-      addSectionPanel.querySelectorAll('.component-card, .add-list-item[data-name]').forEach(card => {
+      outlineAddView.querySelectorAll('.component-card, .add-list-item[data-name]').forEach(card => {
         const name = (card.dataset.name || '').toLowerCase();
         card.style.display = (!q || name.includes(q)) ? '' : 'none';
       });
-      addSectionPanel.querySelectorAll('.add-cat-label').forEach(label => {
+      outlineAddView.querySelectorAll('.add-cat-label').forEach(label => {
         let next = label.nextElementSibling;
         let anyVisible = false;
         while (next && !next.classList.contains('add-cat-label') && !next.classList.contains('add-panel-section-label')) {
@@ -4228,7 +4248,7 @@
 
     // Close panels when clicking canvas background
     document.getElementById('canvas').addEventListener('click', () => {
-      if (addSectionPanel.classList.contains('open')) closeAddPanel();
+      if (outlineAddView.style.display === 'flex') closeAddPanel();
       if (addElementPanel.classList.contains('open')) closeAddElementPanel();
     });
 
