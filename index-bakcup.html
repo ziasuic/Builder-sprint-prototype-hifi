@@ -322,18 +322,23 @@
       flex-direction: column;
       gap: 8px;
       max-height: calc(100% - 48px);
-      overflow-y: auto;
+      overflow: hidden;
+    }
+    .outline-panel--add-mode {
+      padding: 0;
+      gap: 0;
     }
 
     .outline-panel__head {
       display: flex;
       align-items: center;
-      padding: 0 0 4px;
+      min-height: 26px;
+      padding: 0 0 10px;
     }
     .outline-panel__head-title {
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 600;
-      line-height: 22px;
+      line-height: 20px;
       color: var(--gs-80);
     }
 
@@ -345,21 +350,22 @@
     .outline-sections {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .outline-section {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 4px;
     }
 
     .outline-section__label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      color: var(--gs-60);
+      color: var(--gs-50);
       text-transform: uppercase;
-      padding: 4px 0 8px;
+      letter-spacing: 0.05em;
+      padding: 10px 0 4px;
       line-height: 16px;
     }
 
@@ -374,7 +380,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px;
+      padding: 6px 8px;
       border-radius: 6px;
       cursor: pointer;
       transition: background 0.1s;
@@ -491,7 +497,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 8px;
+      padding: 6px 8px;
       cursor: pointer;
       font-size: 12px;
       font-weight: 600;
@@ -1637,7 +1643,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 14px 14px 0;
+      padding: 16px 12px 10px;
       flex-shrink: 0;
     }
     .add-panel-header__back {
@@ -1990,6 +1996,9 @@
     <!-- Outline Panel -->
     <div class="outline-panel" id="outline-panel">
 
+      <!-- VIEW: Outline -->
+      <div id="outline-main-view" style="display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto;">
+
       <!-- Heading -->
       <div class="outline-panel__head">
         <span class="outline-panel__head-title">Outline</span>
@@ -2124,14 +2133,17 @@
 
       </div><!-- /outline-sections -->
 
-    </div><!-- /outline-panel -->
+      </div><!-- /outline-main-view -->
 
-    <!-- ── Add Section picker panel ── -->
-    <div class="add-section-panel" id="add-section-panel">
+      <!-- VIEW: Add section (embedded) -->
+      <div id="outline-add-view" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
 
       <!-- ══ MAIN VIEW ══ -->
       <div class="add-panel-view active" id="sec-view-main">
-        <div class="add-panel-header" style="padding:14px 14px 10px;">
+        <div class="add-panel-header">
+          <button class="add-panel-header__back" onclick="closeAddPanel()" aria-label="Back">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
           <span class="add-panel-header__title">Add section</span>
           <button class="add-panel-header__close" onclick="closeAddPanel()" aria-label="Close">
             <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -2211,7 +2223,7 @@
 
       <!-- ══ PRE-BUILT VIEW ══ -->
       <div class="add-panel-view" id="sec-view-prebuilt">
-        <div class="add-panel-header" style="padding:14px 14px 0;">
+        <div class="add-panel-header">
           <button class="add-panel-header__back" onclick="showSectionView('main')" aria-label="Back">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -2338,7 +2350,7 @@
 
       <!-- ══ EMPTY SECTION VIEW ══ -->
       <div class="add-panel-view" id="sec-view-scratch">
-        <div class="add-panel-header" style="padding:14px 14px 10px;">
+        <div class="add-panel-header">
           <button class="add-panel-header__back" onclick="showSectionView('main')" aria-label="Back">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -2385,7 +2397,7 @@
 
       <!-- ══ CUSTOM CODE VIEW ══ -->
       <div class="add-panel-view" id="sec-view-code">
-        <div class="add-panel-header" style="padding:14px 14px 12px;">
+        <div class="add-panel-header">
           <button class="add-panel-header__back" onclick="showSectionView('main')" aria-label="Back">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
@@ -2401,11 +2413,13 @@
         </div>
       </div><!-- /code view -->
 
-    </div><!-- /add-section-panel -->
+      </div><!-- /outline-add-view -->
+
+    </div><!-- /outline-panel -->
 
     <!-- ── Add panel ── -->
     <div class="add-element-panel" id="add-element-panel">
-      <div class="add-panel-header" style="padding:14px 14px 10px;">
+      <div class="add-panel-header">
         <span class="add-panel-header__title">Add block</span>
         <button class="add-panel-header__close" onclick="closeAddElementPanel()" aria-label="Close">
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -2919,10 +2933,11 @@
         <div class="props-tabs" id="props-tabs-bar">
           <button class="props-tab active">Content</button>
           <button class="props-tab">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="color:#7A52CC">
-              <path d="M6.5 1L7.6 4.4L11 5L8.3 7.4L9.2 10.8L6.5 9.1L3.8 10.8L4.7 7.4L2 5L5.4 4.4L6.5 1Z" fill="currentColor"/>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="color:#7A52CC">
+              <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+              <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
             </svg>
-            AI generation
+            Edit with assistant
           </button>
         </div>
 
@@ -3025,12 +3040,18 @@
             </button>
             <div class="image-ai-card">
               <div class="image-ai-card__header">
-                <svg width="12" height="12" viewBox="0 0 13 13" fill="none" style="color:#7A52CC;flex-shrink:0"><path d="M6.5 1L7.6 4.4L11 5L8.3 7.4L9.2 10.8L6.5 9.1L3.8 10.8L4.7 7.4L2 5L5.4 4.4L6.5 1Z" fill="currentColor"/></svg>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="color:#7A52CC;flex-shrink:0">
+                  <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                </svg>
                 <span class="image-ai-card__label">Generate with AI</span>
               </div>
               <textarea class="prop-textarea" rows="3" placeholder="Describe the image you want…" style="border-radius:6px;font-size:12px;">Generate an image of Memorial Day BBQ theme</textarea>
               <button class="prop-ai-btn" style="height:32px;font-size:12px;border-radius:6px;">
-                <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L7.6 4.4L11 5L8.3 7.4L9.2 10.8L6.5 9.1L3.8 10.8L4.7 7.4L2 5L5.4 4.4L6.5 1Z" fill="currentColor"/></svg>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                  <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                </svg>
                 Generate image
               </button>
             </div>
@@ -3247,11 +3268,7 @@
               <span class="prop-element-row__label">Product carousel</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="prop-element-row" onclick="openElementPanel('weekly','viewall','View all link')" data-element="weekly-viewall">
-              <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M10 4L14 8L10 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="prop-element-row__label">View all link</span>
-              <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
+
             <button class="outline-add-btn" style="padding:6px 4px;" onclick="openAddElementPanel('weekly','Featured Products')">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="#0A5546"/><path d="M8 5V11M5 8H11" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
               Add block
@@ -3307,13 +3324,14 @@
             <div class="source-mode-panel" id="weekly-source-auto">
               <div class="auto-resolved-card">
                 <div class="auto-resolved-card__label">
-                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                    <path d="M5.5 1L6.6 3.8L9.5 4.1L7.4 6L8 9L5.5 7.6L3 9L3.6 6L1.5 4.1L4.4 3.8Z" fill="currentColor"/>
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                    <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                    <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
                   </svg>
                   Powered by Instacart AI
                 </div>
-                <div class="auto-resolved-card__value">Personalization model v2.4</div>
-                <div class="auto-resolved-card__hint">Products are selected and ranked by the Instacart recommendation engine based on this shopper's signals. ~94% relevance score on last run.</div>
+                <div class="auto-resolved-card__value">Smart recommendations</div>
+                <div class="auto-resolved-card__hint">Products are personalized for each shopper to help drive more purchases.</div>
               </div>
             </div>
 
@@ -3405,31 +3423,6 @@
           </div>
         </div>
 
-        <!-- Weekly: View all link element -->
-        <div class="section-view element-view" id="view-weekly-viewall" style="display:none">
-          <div class="props-fields-group">
-            <div class="props-section-label">Style</div>
-            <div class="props-field">
-              <div class="props-field-label">Label</div>
-              <input class="prop-input" type="text" value="View all" />
-            </div>
-            <div class="props-field">
-              <div class="props-field-label">URL</div>
-              <input class="prop-input" type="text" placeholder="https://" />
-            </div>
-          </div>
-          <div class="props-divider"></div>
-          <div class="props-fields-group">
-            <div class="prop-toggle-row">
-              <span class="prop-toggle-label">Open in new tab</span>
-              <label class="prop-toggle"><input type="checkbox" /><span class="prop-toggle__track"></span></label>
-            </div>
-            <div class="prop-toggle-row">
-              <span class="prop-toggle-label">Visible</span>
-              <label class="prop-toggle"><input type="checkbox" checked /><span class="prop-toggle__track"></span></label>
-            </div>
-          </div>
-        </div>
 
         <!-- ── CURATED DEALS view ── -->
         <div class="section-view" id="view-curated" style="display:none">
@@ -3476,11 +3469,7 @@
               <span class="prop-element-row__label">Product carousel</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="prop-element-row" onclick="openElementPanel('curated','viewall','View all link')" data-element="curated-viewall">
-              <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M10 4L14 8L10 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="prop-element-row__label">View all link</span>
-              <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
+
             <button class="outline-add-btn" style="padding:6px 4px;" onclick="openAddElementPanel('curated','Curated deals')">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="#0A5546"/><path d="M8 5V11M5 8H11" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
               Add block
@@ -3536,13 +3525,14 @@
             <div class="source-mode-panel" id="curated-source-auto">
               <div class="auto-resolved-card">
                 <div class="auto-resolved-card__label">
-                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                    <path d="M5.5 1L6.6 3.8L9.5 4.1L7.4 6L8 9L5.5 7.6L3 9L3.6 6L1.5 4.1L4.4 3.8Z" fill="currentColor"/>
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                    <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                    <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
                   </svg>
                   Powered by Instacart AI
                 </div>
-                <div class="auto-resolved-card__value">Personalization model v2.4</div>
-                <div class="auto-resolved-card__hint">Products are selected and ranked by the Instacart recommendation engine based on this shopper's signals. ~94% relevance score on last run.</div>
+                <div class="auto-resolved-card__value">Smart recommendations</div>
+                <div class="auto-resolved-card__hint">Products are personalized for each shopper to help drive more purchases.</div>
               </div>
             </div>
 
@@ -3633,31 +3623,6 @@
           </div>
         </div>
 
-        <!-- Curated: View all link element -->
-        <div class="section-view element-view" id="view-curated-viewall" style="display:none">
-          <div class="props-fields-group">
-            <div class="props-section-label">Style</div>
-            <div class="props-field">
-              <div class="props-field-label">Label</div>
-              <input class="prop-input" type="text" value="View all" />
-            </div>
-            <div class="props-field">
-              <div class="props-field-label">URL</div>
-              <input class="prop-input" type="text" placeholder="https://" />
-            </div>
-          </div>
-          <div class="props-divider"></div>
-          <div class="props-fields-group">
-            <div class="prop-toggle-row">
-              <span class="prop-toggle-label">Open in new tab</span>
-              <label class="prop-toggle"><input type="checkbox" /><span class="prop-toggle__track"></span></label>
-            </div>
-            <div class="prop-toggle-row">
-              <span class="prop-toggle-label">Visible</span>
-              <label class="prop-toggle"><input type="checkbox" checked /><span class="prop-toggle__track"></span></label>
-            </div>
-          </div>
-        </div>
 
         <!-- ── NAVIGATION view ── -->
         <div class="section-view" id="view-navigation" style="display:none">
@@ -4180,26 +4145,34 @@
       btn.classList.add('active');
     }
 
-    /* ── Add-section picker ── */
-    const addSectionPanel = document.getElementById('add-section-panel');
+    /* ── Add-section picker (embedded in outline panel) ── */
+    const outlineMainView  = document.getElementById('outline-main-view');
+    const outlineAddView   = document.getElementById('outline-add-view');
+    const outlinePanel     = document.getElementById('outline-panel');
+    // Keep alias so filterComponents / showSectionView can still query within the add view
+    const addSectionPanel  = outlineAddView;
 
     function openAddPanel() {
       closePropPanel();
       showSectionView('main');
-      addSectionPanel.classList.add('open');
+      outlineMainView.style.display = 'none';
+      outlineAddView.style.display  = 'flex';
+      outlinePanel.classList.add('outline-panel--add-mode');
     }
 
     function closeAddPanel() {
-      addSectionPanel.classList.remove('open');
+      outlineAddView.style.display  = 'none';
+      outlineMainView.style.display = '';
+      outlinePanel.classList.remove('outline-panel--add-mode');
     }
 
     function showSectionView(viewId) {
-      addSectionPanel.querySelectorAll('.add-panel-view').forEach(v => v.classList.remove('active'));
+      outlineAddView.querySelectorAll('.add-panel-view').forEach(v => v.classList.remove('active'));
       const target = document.getElementById('sec-view-' + viewId);
       if (target) target.classList.add('active');
       // Reset search when entering prebuilt view
       if (viewId === 'prebuilt') {
-        const inp = addSectionPanel.querySelector('.add-section-panel__search-input');
+        const inp = outlineAddView.querySelector('.add-section-panel__search-input');
         if (inp) { inp.value = ''; filterComponents(''); }
       }
     }
@@ -4211,11 +4184,11 @@
 
     function filterComponents(query) {
       const q = (query || '').toLowerCase().trim();
-      addSectionPanel.querySelectorAll('.component-card, .add-list-item[data-name]').forEach(card => {
+      outlineAddView.querySelectorAll('.component-card, .add-list-item[data-name]').forEach(card => {
         const name = (card.dataset.name || '').toLowerCase();
         card.style.display = (!q || name.includes(q)) ? '' : 'none';
       });
-      addSectionPanel.querySelectorAll('.add-cat-label').forEach(label => {
+      outlineAddView.querySelectorAll('.add-cat-label').forEach(label => {
         let next = label.nextElementSibling;
         let anyVisible = false;
         while (next && !next.classList.contains('add-cat-label') && !next.classList.contains('add-panel-section-label')) {
@@ -4228,7 +4201,7 @@
 
     // Close panels when clicking canvas background
     document.getElementById('canvas').addEventListener('click', () => {
-      if (addSectionPanel.classList.contains('open')) closeAddPanel();
+      if (outlineAddView.style.display === 'flex') closeAddPanel();
       if (addElementPanel.classList.contains('open')) closeAddElementPanel();
     });
 
