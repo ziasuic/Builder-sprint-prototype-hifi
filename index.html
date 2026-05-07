@@ -4117,8 +4117,7 @@
       document.getElementById('props-header-element').style.display = 'flex';
       document.getElementById('props-element-title').textContent = elementLabel;
 
-      // Hide tab bar (element views are single-context)
-      document.getElementById('props-tabs-bar').style.display = 'none';
+      // Keep tab bar visible in element views
 
       // Highlight the clicked element row — try compound key first (e.g. "weekly-header"), then plain key
       document.querySelectorAll('.prop-element-row').forEach(r => r.classList.remove('element-active'));
