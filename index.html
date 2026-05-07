@@ -1878,6 +1878,122 @@
     .section-actions-popup__btn--danger { color: #D93838; }
     .section-actions-popup__btn--danger:hover { background: #fff5f5; }
 
+    /* ── Template dropdown ── */
+    .template-dropdown { position: relative; }
+    .template-trigger {
+      height: 32px; display: flex; align-items: center; gap: 5px;
+      padding: 0 10px; background: var(--gs-00);
+      border: 1px solid var(--gs-20); border-radius: 6px;
+      font-family: var(--font); font-size: 13px; color: var(--gs-70);
+      cursor: pointer; white-space: nowrap;
+    }
+    .template-trigger:hover { background: var(--gs-05); }
+    .template-trigger strong { color: var(--gs-80); font-weight: 600; }
+
+    .template-popover {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      width: 264px; background: var(--gs-00);
+      border-radius: 10px; border: 1px solid var(--gs-15);
+      box-shadow: 0 6px 24px rgba(0,0,0,.14); z-index: 200; overflow: hidden;
+    }
+    .template-popover__head {
+      padding: 14px 14px 10px; border-bottom: 1px solid var(--gs-15);
+    }
+    .template-popover__title { font-size: 13px; font-weight: 600; color: var(--gs-80); }
+    .template-popover__sub { font-size: 11px; color: var(--gs-50); margin-top: 2px; }
+
+    .template-list { padding: 6px; display: flex; flex-direction: column; gap: 1px; }
+    .template-item {
+      width: 100%; display: flex; align-items: center; gap: 10px;
+      padding: 8px; border-radius: 6px; border: none; background: none;
+      cursor: pointer; text-align: left; font-family: var(--font);
+      transition: background 0.1s;
+    }
+    .template-item:hover { background: var(--gs-05); }
+    .template-item.previewing { background: #EEF2FF; }
+    .template-item.applied { background: #F0FDF4; }
+
+    .template-item__thumb {
+      width: 44px; height: 32px; border-radius: 4px;
+      overflow: hidden; flex-shrink: 0; border: 1px solid rgba(0,0,0,.06);
+    }
+    .template-item__info { flex: 1; min-width: 0; }
+    .template-item__name { font-size: 13px; font-weight: 500; color: var(--gs-80); }
+    .template-item__sub { font-size: 11px; color: var(--gs-50); margin-top: 1px; }
+    .template-item__check { flex-shrink: 0; }
+
+    .template-popover__footer {
+      border-top: 1px solid var(--gs-15); padding: 6px;
+      display: flex; flex-direction: column; gap: 1px;
+    }
+    .template-action-btn {
+      width: 100%; display: flex; align-items: center; gap: 8px;
+      padding: 9px 10px; border-radius: 6px; border: none; background: none;
+      cursor: pointer; text-align: left; font-family: var(--font);
+      font-size: 13px; color: var(--gs-70); transition: background 0.1s;
+    }
+    .template-action-btn:hover { background: var(--gs-05); }
+
+    /* ── Template preview bar ── */
+    .template-preview-bar {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 10px;
+      background: #1E1F21; color: #fff; border-radius: 10px;
+      padding: 10px 12px 10px 16px; z-index: 300;
+      box-shadow: 0 4px 24px rgba(0,0,0,.28); font-size: 13px;
+      white-space: nowrap;
+    }
+    .preview-bar__label { color: rgba(255,255,255,.65); }
+    .preview-bar__label strong { color: #fff; font-weight: 600; }
+    .preview-bar__cancel {
+      background: rgba(255,255,255,.1); border: none; border-radius: 6px;
+      color: #fff; font-size: 13px; font-weight: 500; padding: 6px 12px;
+      cursor: pointer; font-family: var(--font);
+    }
+    .preview-bar__cancel:hover { background: rgba(255,255,255,.18); }
+    .preview-bar__apply {
+      background: #4F46E5; border: none; border-radius: 6px;
+      color: #fff; font-size: 13px; font-weight: 600; padding: 6px 14px;
+      cursor: pointer; font-family: var(--font);
+    }
+    .preview-bar__apply:hover { background: #4338CA; }
+
+    /* ── Template preview mode — disable all editing ── */
+    .template-previewing .canvas-el { pointer-events: none !important; cursor: default !important; }
+    .template-previewing .canvas-el-chip { display: none !important; }
+    .template-previewing .section-hover-zone { pointer-events: none !important; }
+    .template-previewing .section-hover-label { display: none !important; }
+    .template-previewing .section-reorder { display: none !important; }
+    .template-previewing .outline-panel { opacity: 0.4; pointer-events: none; }
+    .template-previewing .props-panel { opacity: 0.4; pointer-events: none; }
+    .template-previewing .toolbar { opacity: 0.4; pointer-events: none; }
+
+    /* ── Save template modal ── */
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.4);
+      z-index: 400; display: flex; align-items: center; justify-content: center;
+    }
+    .modal-card {
+      background: var(--gs-00); border-radius: 12px; padding: 24px;
+      width: 340px; box-shadow: 0 8px 32px rgba(0,0,0,.2);
+    }
+    .modal-card__title { font-size: 15px; font-weight: 600; color: var(--gs-80); margin-bottom: 6px; }
+    .modal-card__sub { font-size: 13px; color: var(--gs-60); margin-bottom: 16px; line-height: 1.5; }
+    .modal-card__label { font-size: 12px; font-weight: 500; color: var(--gs-60); margin-bottom: 5px; }
+    .modal-card__input {
+      width: 100%; height: 36px; border: 1px solid var(--gs-20);
+      border-radius: 6px; padding: 0 10px; font-size: 13px;
+      font-family: var(--font); color: var(--gs-80); margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+    .modal-card__input:focus { outline: none; border-color: #4F46E5; box-shadow: 0 0 0 2px #EEF2FF; }
+    .modal-card__footer { display: flex; justify-content: flex-end; gap: 8px; }
+    .modal-btn { height: 34px; padding: 0 14px; border-radius: 6px; font-family: var(--font); font-size: 13px; font-weight: 500; cursor: pointer; border: none; }
+    .modal-btn--secondary { background: var(--gs-10); color: var(--gs-70); }
+    .modal-btn--secondary:hover { background: var(--gs-15); }
+    .modal-btn--primary { background: #4F46E5; color: #fff; font-weight: 600; }
+    .modal-btn--primary:hover { background: #4338CA; }
+
   </style>
 </head>
 <body>
@@ -1922,18 +2038,118 @@
       </div>
     </div>
 
-    <!-- Right: overflow menu + Save + Publish -->
+    <!-- Right: overflow menu + Template + Save + Publish -->
     <div class="topbar__right">
       <button class="icon-btn" title="More options">
-        <!-- AI / sparkle icon -->
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
           <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
         </svg>
       </button>
+
+      <div class="template-dropdown" id="template-dropdown">
+        <button class="template-trigger" id="template-trigger" onclick="toggleTemplatePopover(event)">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          Template: <strong id="template-trigger-name">Default</strong>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+      <div class="template-popover" id="template-popover" style="display:none">
+        <div class="template-popover__head">
+          <div class="template-popover__title">Page templates</div>
+          <div class="template-popover__sub">Switch or save the current layout</div>
+        </div>
+
+        <div class="template-list" id="template-list">
+          <!-- Default -->
+          <button class="template-item applied" id="tpl-Default" onclick="previewTemplate('Default')">
+            <div class="template-item__thumb">
+              <svg width="44" height="32" viewBox="0 0 44 32" fill="none">
+                <rect width="44" height="32" fill="#ECF6F3"/>
+                <rect x="3" y="3" width="38" height="10" rx="1.5" fill="#B8DDD4"/>
+                <rect x="3" y="16" width="12" height="9" rx="1" fill="#D5EDE7"/>
+                <rect x="17" y="16" width="12" height="9" rx="1" fill="#D5EDE7"/>
+                <rect x="31" y="16" width="10" height="9" rx="1" fill="#D5EDE7"/>
+              </svg>
+            </div>
+            <div class="template-item__info">
+              <div class="template-item__name">Default</div>
+              <div class="template-item__sub" id="tpl-Default-sub">Current layout</div>
+            </div>
+            <div class="template-item__check" id="tpl-Default-check">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8L6.5 11.5L13 5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </button>
+
+          <!-- Holiday Sale -->
+          <button class="template-item" id="tpl-Holiday Sale" onclick="previewTemplate('Holiday Sale')">
+            <div class="template-item__thumb">
+              <svg width="44" height="32" viewBox="0 0 44 32" fill="none">
+                <rect width="44" height="32" fill="#FFF0F0"/>
+                <rect x="3" y="3" width="38" height="10" rx="1.5" fill="#FBBDB3"/>
+                <rect x="3" y="16" width="38" height="13" rx="1.5" fill="#B91C1C"/>
+                <rect x="5" y="18" width="16" height="2" rx="1" fill="rgba(255,255,255,.5)"/>
+                <rect x="5" y="22" width="10" height="2" rx="1" fill="rgba(255,255,255,.3)"/>
+              </svg>
+            </div>
+            <div class="template-item__info">
+              <div class="template-item__name">Holiday Sale</div>
+              <div class="template-item__sub">Festive red theme</div>
+            </div>
+            <div class="template-item__check" id="tpl-Holiday Sale-check" style="opacity:0">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8L6.5 11.5L13 5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </button>
+
+          <!-- July 4th -->
+          <button class="template-item" id="tpl-July 4th" onclick="previewTemplate('July 4th')">
+            <div class="template-item__thumb">
+              <svg width="44" height="32" viewBox="0 0 44 32" fill="none">
+                <rect width="44" height="32" fill="#EFF6FF"/>
+                <rect x="3" y="3" width="38" height="10" rx="1.5" fill="#BFDBFE"/>
+                <rect x="3" y="16" width="38" height="13" rx="1.5" fill="#1E3A8A"/>
+                <rect x="5" y="18" width="16" height="2" rx="1" fill="rgba(255,255,255,.5)"/>
+                <rect x="5" y="22" width="10" height="2" rx="1" fill="rgba(255,255,255,.3)"/>
+              </svg>
+            </div>
+            <div class="template-item__info">
+              <div class="template-item__name">July 4th</div>
+              <div class="template-item__sub">Patriotic blue theme</div>
+            </div>
+            <div class="template-item__check" id="tpl-July 4th-check" style="opacity:0">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8L6.5 11.5L13 5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </button>
+        </div>
+
+        <div class="template-popover__footer">
+
+          <button class="template-action-btn" onclick="openSaveTemplateModal()">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V10M3 7H11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+            Save current layout as template
+          </button>
+        </div>
+      </div>
+    </div><!-- /template-dropdown -->
+
       <button class="btn btn--secondary">Save</button>
       <button class="btn btn--primary">Publish</button>
-    </div>
+    </div><!-- /topbar__right -->
   </div>
 
   <!-- ══════════ MAIN AREA ══════════ -->
@@ -2576,6 +2792,8 @@
             <img src="https://www.figma.com/api/mcp/asset/aebae24f-c667-46a7-a252-b9b508dc0e0f" alt="Fresh spring produce"
               style="position:absolute;width:100%;height:100%;object-fit:cover;object-position:center top;"
               onerror="this.style.display='none';">
+            <!-- Template color overlay -->
+            <div id="template-hero-overlay" style="position:absolute;inset:0;pointer-events:none;transition:background 0.4s;background:transparent;"></div>
           </div>
           <!-- Hero text -->
           <div id="hero-text-block" style="background:#278657;padding:16px 14px 20px;display:flex;flex-direction:column;gap:16px;align-items:flex-start;">
@@ -4446,6 +4664,263 @@
         }
       }, { passive: true });
     })();
+
+    /* ══════════════════════════════════════════
+       TEMPLATE SYSTEM
+    ══════════════════════════════════════════ */
+
+    const TEMPLATES = {
+      'Default': {
+        heroOverlay:      'transparent',
+        heroBg:           '#f4f4f4',
+        heroHeadline:     'Fresh from the field',
+        heroText:         'Hand-picked seasonal produce, delivered to your door.',
+        weeklyBg:         '#fff',
+        weeklyHeaderColor:'#278657',
+        weeklyHeaderText: 'Featured Products',
+        curatedBg:        '#278657',
+        curatedHeaderColor:'#fff',
+        curatedHeaderText:'Curated deals',
+        heroBannerBg:     '#278657',
+      },
+      'Holiday Sale': {
+        heroOverlay:      'rgba(153, 27, 27, 0.45)',
+        heroBg:           '#f4f4f4',
+        heroHeadline:     'Give the Gift of Fresh',
+        heroText:         'Seasonal favourites and holiday bundles, all in one place.',
+        weeklyBg:         '#FFF5F5',
+        weeklyHeaderColor:'#B91C1C',
+        weeklyHeaderText: 'Holiday Picks',
+        curatedBg:        '#991B1B',
+        curatedHeaderColor:'#fff',
+        curatedHeaderText:'Holiday Deals',
+        heroBannerBg:     '#B91C1C',
+      },
+      'July 4th': {
+        heroOverlay:      'rgba(30, 58, 138, 0.45)',
+        heroBg:           '#f4f4f4',
+        heroHeadline:     'Celebrate in Style',
+        heroText:         'Everything you need for the perfect 4th of July cookout.',
+        weeklyBg:         '#EFF6FF',
+        weeklyHeaderColor:'#1D4ED8',
+        weeklyHeaderText: 'Independence Day Picks',
+        curatedBg:        '#1E3A8A',
+        curatedHeaderColor:'#fff',
+        curatedHeaderText:'4th of July Deals',
+        heroBannerBg:     '#1E3A8A',
+      },
+    };
+
+    let activeTemplate   = 'Default';   // currently applied
+    let previewingTemplate = null;       // template being previewed (not yet confirmed)
+
+    function toggleTemplatePopover(e) {
+      e && e.stopPropagation();
+      const pop = document.getElementById('template-popover');
+      if (pop.style.display === 'none') {
+        pop.style.display = 'block';
+        // Close when clicking outside
+        setTimeout(() => document.addEventListener('click', closeTemplatePopoverOutside), 0);
+      } else {
+        closeTemplatePopover();
+      }
+    }
+    function closeTemplatePopoverOutside(e) {
+      if (!document.getElementById('template-dropdown').contains(e.target)) {
+        closeTemplatePopover();
+      }
+    }
+    function closeTemplatePopover() {
+      document.getElementById('template-popover').style.display = 'none';
+      document.removeEventListener('click', closeTemplatePopoverOutside);
+    }
+
+    function _applyTemplateToCanvas(name) {
+      const t = TEMPLATES[name];
+      if (!t) return;
+      // Hero overlay
+      document.getElementById('template-hero-overlay').style.background = t.heroOverlay;
+      // Hero headline & text
+      const hEl = document.getElementById('hero-headline-el');
+      if (hEl) { const chip = hEl.querySelector('.canvas-el-chip'); hEl.textContent = t.heroHeadline; if (chip) hEl.prepend(chip); }
+      const tEl = document.getElementById('hero-text-el');
+      if (tEl) { const chip = tEl.querySelector('.canvas-el-chip'); tEl.textContent = t.heroText; if (chip) tEl.prepend(chip); }
+      // Hero banner background
+      const bannerEl = document.getElementById('hero-text-block');
+      if (bannerEl) bannerEl.style.background = t.heroBannerBg;
+      // Featured Products section
+      const wSec = document.getElementById('weekly-section');
+      if (wSec) wSec.style.background = t.weeklyBg;
+      const wHdr = document.getElementById('weekly-header-el');
+      if (wHdr) { wHdr.style.color = t.weeklyHeaderColor; const chip = wHdr.querySelector('.canvas-el-chip'); wHdr.textContent = t.weeklyHeaderText; if (chip) wHdr.prepend(chip); }
+      // Curated deals section
+      const cSec = document.getElementById('curated-section');
+      if (cSec) cSec.style.background = t.curatedBg;
+      const cHdr = document.getElementById('curated-header-el');
+      if (cHdr) { cHdr.style.color = t.curatedHeaderColor; const chip = cHdr.querySelector('.canvas-el-chip'); cHdr.textContent = t.curatedHeaderText; if (chip) cHdr.prepend(chip); }
+    }
+
+    function previewTemplate(name) {
+      if (name === activeTemplate && !previewingTemplate) {
+        closeTemplatePopover(); return;
+      }
+      previewingTemplate = name;
+
+      // Apply canvas changes
+      _applyTemplateToCanvas(name);
+
+      // Disable editing
+      document.querySelector('.builder-main').classList.add('template-previewing');
+      closePropPanel();
+      closeAddPanel();
+
+      // Show preview bar
+      document.getElementById('preview-bar-name').textContent = name;
+      document.getElementById('template-preview-bar').style.display = 'flex';
+
+      // Update popover items
+      ['Default','Holiday Sale','July 4th'].forEach(n => {
+        const el = document.getElementById('tpl-' + n);
+        const ck = document.getElementById('tpl-' + n + '-check');
+        if (!el || !ck) return;
+        el.classList.remove('applied', 'previewing');
+        ck.style.opacity = '0';
+        if (n === activeTemplate) { el.classList.add('applied'); }
+        if (n === name) { el.classList.add('previewing'); ck.style.opacity = '1'; }
+      });
+
+      closeTemplatePopover();
+    }
+
+    function applyTemplate() {
+      if (!previewingTemplate) return;
+      activeTemplate = previewingTemplate;
+      previewingTemplate = null;
+
+      // Re-enable editing
+      document.querySelector('.builder-main').classList.remove('template-previewing');
+      document.getElementById('template-preview-bar').style.display = 'none';
+
+      // Update trigger label
+      document.getElementById('template-trigger-name').textContent = activeTemplate;
+
+      // Update popover item states
+      ['Default','Holiday Sale','July 4th'].forEach(n => {
+        const el = document.getElementById('tpl-' + n);
+        const ck = document.getElementById('tpl-' + n + '-check');
+        const sub = document.getElementById('tpl-' + n + '-sub');
+        if (!el || !ck) return;
+        el.classList.remove('applied','previewing');
+        ck.style.opacity = '0';
+        if (n === activeTemplate) {
+          el.classList.add('applied');
+          ck.style.opacity = '1';
+          if (sub) sub.textContent = 'Current layout';
+        } else {
+          if (sub) sub.textContent = TEMPLATES[n] ? TEMPLATES[n].heroHeadline ? '' : '' : '';
+          // restore sub labels
+          const subLabels = { 'Default':'Green theme', 'Holiday Sale':'Festive red theme', 'July 4th':'Patriotic blue theme' };
+          if (sub) sub.textContent = n === activeTemplate ? 'Current layout' : subLabels[n] || '';
+        }
+      });
+      // fix sub for active
+      const activeSub = document.getElementById('tpl-' + activeTemplate + '-sub');
+      if (activeSub) activeSub.textContent = 'Current layout';
+      const subLabels = { 'Default':'Green theme', 'Holiday Sale':'Festive red theme', 'July 4th':'Patriotic blue theme' };
+      ['Default','Holiday Sale','July 4th'].filter(n => n !== activeTemplate).forEach(n => {
+        const s = document.getElementById('tpl-' + n + '-sub');
+        if (s) s.textContent = subLabels[n] || '';
+      });
+    }
+
+    function cancelTemplatePreview() {
+      const previous = activeTemplate;
+      previewingTemplate = null;
+
+      // Revert canvas to active template
+      _applyTemplateToCanvas(previous);
+
+      // Re-enable editing
+      document.querySelector('.builder-main').classList.remove('template-previewing');
+      document.getElementById('template-preview-bar').style.display = 'none';
+
+      // Reset popover item states
+      ['Default','Holiday Sale','July 4th'].forEach(n => {
+        const el = document.getElementById('tpl-' + n);
+        const ck = document.getElementById('tpl-' + n + '-check');
+        if (!el || !ck) return;
+        el.classList.remove('applied','previewing');
+        ck.style.opacity = '0';
+        if (n === previous) { el.classList.add('applied'); ck.style.opacity = '1'; }
+      });
+    }
+
+    /* ── Save template modal ── */
+    function openSaveTemplateModal() {
+      closeTemplatePopover();
+      document.getElementById('save-template-name').value = 'My template';
+      document.getElementById('save-template-modal').style.display = 'flex';
+      setTimeout(() => document.getElementById('save-template-name').select(), 50);
+    }
+    function closeSaveTemplateModal() {
+      document.getElementById('save-template-modal').style.display = 'none';
+    }
+    function handleModalBackdropClick(e) {
+      if (e.target === document.getElementById('save-template-modal')) closeSaveTemplateModal();
+    }
+    function saveTemplate() {
+      const name = document.getElementById('save-template-name').value.trim();
+      if (!name) return;
+      // Clone current active template data under new name
+      TEMPLATES[name] = { ...TEMPLATES[activeTemplate] };
+      // Add to popover list
+      const list = document.getElementById('template-list');
+      const newItem = document.createElement('button');
+      newItem.className = 'template-item';
+      newItem.id = 'tpl-' + name;
+      newItem.setAttribute('onclick', `previewTemplate('${name}')`);
+      newItem.innerHTML = `
+        <div class="template-item__thumb">
+          <svg width="44" height="32" viewBox="0 0 44 32" fill="none">
+            <rect width="44" height="32" fill="#F5F5F7"/>
+            <rect x="3" y="3" width="38" height="10" rx="1.5" fill="#D5D7DA"/>
+            <rect x="3" y="16" width="38" height="13" rx="1.5" fill="#A0A3A8"/>
+          </svg>
+        </div>
+        <div class="template-item__info">
+          <div class="template-item__name">${name}</div>
+          <div class="template-item__sub" id="tpl-${name}-sub">Saved template</div>
+        </div>
+        <div class="template-item__check" id="tpl-${name}-check" style="opacity:0">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8L6.5 11.5L13 5" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>`;
+      list.appendChild(newItem);
+      closeSaveTemplateModal();
+    }
   </script>
+
+  <!-- ── Template preview bar ── -->
+  <div class="template-preview-bar" id="template-preview-bar" style="display:none">
+    <span class="preview-bar__label">Previewing <strong id="preview-bar-name">Holiday Sale</strong></span>
+    <button class="preview-bar__cancel" onclick="cancelTemplatePreview()">Cancel</button>
+    <button class="preview-bar__apply" onclick="applyTemplate()">Apply template</button>
+  </div>
+
+  <!-- ── Save template modal ── -->
+  <div class="modal-backdrop" id="save-template-modal" style="display:none" onclick="handleModalBackdropClick(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-card__title">Save as template</div>
+      <div class="modal-card__sub">Save the current layout so you can reuse it on other pages.</div>
+      <div class="modal-card__label">Template name</div>
+      <input class="modal-card__input" id="save-template-name" type="text" value="My template" placeholder="e.g. Summer Sale" />
+      <div class="modal-card__footer">
+        <button class="modal-btn modal-btn--secondary" onclick="closeSaveTemplateModal()">Cancel</button>
+        <button class="modal-btn modal-btn--primary" onclick="saveTemplate()">Save template</button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
