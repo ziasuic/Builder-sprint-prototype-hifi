@@ -2933,10 +2933,11 @@
         <div class="props-tabs" id="props-tabs-bar">
           <button class="props-tab active">Content</button>
           <button class="props-tab">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style="color:#7A52CC">
-              <path d="M6.5 1L7.6 4.4L11 5L8.3 7.4L9.2 10.8L6.5 9.1L3.8 10.8L4.7 7.4L2 5L5.4 4.4L6.5 1Z" fill="currentColor"/>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="color:#7A52CC">
+              <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+              <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
             </svg>
-            AI generation
+            Edit with assistant
           </button>
         </div>
 
@@ -3039,12 +3040,18 @@
             </button>
             <div class="image-ai-card">
               <div class="image-ai-card__header">
-                <svg width="12" height="12" viewBox="0 0 13 13" fill="none" style="color:#7A52CC;flex-shrink:0"><path d="M6.5 1L7.6 4.4L11 5L8.3 7.4L9.2 10.8L6.5 9.1L3.8 10.8L4.7 7.4L2 5L5.4 4.4L6.5 1Z" fill="currentColor"/></svg>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="color:#7A52CC;flex-shrink:0">
+                  <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                </svg>
                 <span class="image-ai-card__label">Generate with AI</span>
               </div>
               <textarea class="prop-textarea" rows="3" placeholder="Describe the image you want…" style="border-radius:6px;font-size:12px;">Generate an image of Memorial Day BBQ theme</textarea>
               <button class="prop-ai-btn" style="height:32px;font-size:12px;border-radius:6px;">
-                <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L7.6 4.4L11 5L8.3 7.4L9.2 10.8L6.5 9.1L3.8 10.8L4.7 7.4L2 5L5.4 4.4L6.5 1Z" fill="currentColor"/></svg>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                  <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                  <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                </svg>
                 Generate image
               </button>
             </div>
@@ -3261,11 +3268,7 @@
               <span class="prop-element-row__label">Product carousel</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="prop-element-row" onclick="openElementPanel('weekly','viewall','View all link')" data-element="weekly-viewall">
-              <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M10 4L14 8L10 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="prop-element-row__label">View all link</span>
-              <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
+
             <button class="outline-add-btn" style="padding:6px 4px;" onclick="openAddElementPanel('weekly','Featured Products')">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="#0A5546"/><path d="M8 5V11M5 8H11" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
               Add block
@@ -3321,13 +3324,14 @@
             <div class="source-mode-panel" id="weekly-source-auto">
               <div class="auto-resolved-card">
                 <div class="auto-resolved-card__label">
-                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                    <path d="M5.5 1L6.6 3.8L9.5 4.1L7.4 6L8 9L5.5 7.6L3 9L3.6 6L1.5 4.1L4.4 3.8Z" fill="currentColor"/>
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                    <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                    <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
                   </svg>
                   Powered by Instacart AI
                 </div>
-                <div class="auto-resolved-card__value">Personalization model v2.4</div>
-                <div class="auto-resolved-card__hint">Products are selected and ranked by the Instacart recommendation engine based on this shopper's signals. ~94% relevance score on last run.</div>
+                <div class="auto-resolved-card__value">Smart recommendations</div>
+                <div class="auto-resolved-card__hint">Products are personalized for each shopper to help drive more purchases.</div>
               </div>
             </div>
 
@@ -3419,31 +3423,6 @@
           </div>
         </div>
 
-        <!-- Weekly: View all link element -->
-        <div class="section-view element-view" id="view-weekly-viewall" style="display:none">
-          <div class="props-fields-group">
-            <div class="props-section-label">Style</div>
-            <div class="props-field">
-              <div class="props-field-label">Label</div>
-              <input class="prop-input" type="text" value="View all" />
-            </div>
-            <div class="props-field">
-              <div class="props-field-label">URL</div>
-              <input class="prop-input" type="text" placeholder="https://" />
-            </div>
-          </div>
-          <div class="props-divider"></div>
-          <div class="props-fields-group">
-            <div class="prop-toggle-row">
-              <span class="prop-toggle-label">Open in new tab</span>
-              <label class="prop-toggle"><input type="checkbox" /><span class="prop-toggle__track"></span></label>
-            </div>
-            <div class="prop-toggle-row">
-              <span class="prop-toggle-label">Visible</span>
-              <label class="prop-toggle"><input type="checkbox" checked /><span class="prop-toggle__track"></span></label>
-            </div>
-          </div>
-        </div>
 
         <!-- ── CURATED DEALS view ── -->
         <div class="section-view" id="view-curated" style="display:none">
@@ -3490,11 +3469,7 @@
               <span class="prop-element-row__label">Product carousel</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="prop-element-row" onclick="openElementPanel('curated','viewall','View all link')" data-element="curated-viewall">
-              <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M10 4L14 8L10 12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="prop-element-row__label">View all link</span>
-              <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
+
             <button class="outline-add-btn" style="padding:6px 4px;" onclick="openAddElementPanel('curated','Curated deals')">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="#0A5546"/><path d="M8 5V11M5 8H11" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
               Add block
@@ -3550,13 +3525,14 @@
             <div class="source-mode-panel" id="curated-source-auto">
               <div class="auto-resolved-card">
                 <div class="auto-resolved-card__label">
-                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                    <path d="M5.5 1L6.6 3.8L9.5 4.1L7.4 6L8 9L5.5 7.6L3 9L3.6 6L1.5 4.1L4.4 3.8Z" fill="currentColor"/>
+                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
+                    <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+                    <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
                   </svg>
                   Powered by Instacart AI
                 </div>
-                <div class="auto-resolved-card__value">Personalization model v2.4</div>
-                <div class="auto-resolved-card__hint">Products are selected and ranked by the Instacart recommendation engine based on this shopper's signals. ~94% relevance score on last run.</div>
+                <div class="auto-resolved-card__value">Smart recommendations</div>
+                <div class="auto-resolved-card__hint">Products are personalized for each shopper to help drive more purchases.</div>
               </div>
             </div>
 
@@ -3647,31 +3623,6 @@
           </div>
         </div>
 
-        <!-- Curated: View all link element -->
-        <div class="section-view element-view" id="view-curated-viewall" style="display:none">
-          <div class="props-fields-group">
-            <div class="props-section-label">Style</div>
-            <div class="props-field">
-              <div class="props-field-label">Label</div>
-              <input class="prop-input" type="text" value="View all" />
-            </div>
-            <div class="props-field">
-              <div class="props-field-label">URL</div>
-              <input class="prop-input" type="text" placeholder="https://" />
-            </div>
-          </div>
-          <div class="props-divider"></div>
-          <div class="props-fields-group">
-            <div class="prop-toggle-row">
-              <span class="prop-toggle-label">Open in new tab</span>
-              <label class="prop-toggle"><input type="checkbox" /><span class="prop-toggle__track"></span></label>
-            </div>
-            <div class="prop-toggle-row">
-              <span class="prop-toggle-label">Visible</span>
-              <label class="prop-toggle"><input type="checkbox" checked /><span class="prop-toggle__track"></span></label>
-            </div>
-          </div>
-        </div>
 
         <!-- ── NAVIGATION view ── -->
         <div class="section-view" id="view-navigation" style="display:none">
