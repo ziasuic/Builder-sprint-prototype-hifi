@@ -1973,24 +1973,6 @@
       position: relative;
       /* no background — inherits from the section container */
     }
-    .injected-block__delete {
-      display: none;
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 22px;
-      height: 22px;
-      background: rgba(217,56,56,.9);
-      border: none;
-      border-radius: 4px;
-      color: #fff;
-      font-size: 11px;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      z-index: 5;
-    }
-    .injected-block:hover .injected-block__delete { display: flex; }
     @keyframes block-pop-in {
       0%   { opacity: 0; transform: translateY(6px); outline-color: rgba(79,70,229,.6); }
       30%  { opacity: 1; transform: translateY(0);   outline-color: rgba(79,70,229,.5); }
@@ -2035,6 +2017,58 @@
     .modal-btn--secondary:hover { background: var(--gs-15); }
     .modal-btn--primary { background: #4F46E5; color: #fff; font-weight: 600; }
     .modal-btn--primary:hover { background: #4338CA; }
+
+    /* ── Drag-to-reorder ── */
+    .drag-handle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gs-30);
+      cursor: grab;
+      border-radius: 3px;
+      transition: color 0.1s;
+    }
+    .drag-handle:hover { color: var(--gs-60); }
+    .drag-handle:active { cursor: grabbing; }
+
+    /* Handle in prop-panel rows — hidden until row is hovered */
+    .prop-drag-handle {
+      width: 14px;
+      height: 20px;
+      opacity: 0;
+      transition: opacity 0.12s, color 0.1s;
+    }
+    .prop-element-row:hover .prop-drag-handle { opacity: 1; }
+    .dragging-row { opacity: 0.4; cursor: grabbing; }
+
+    /* Handle inside the canvas chip — needs pointer-events to fire */
+    .block-drag-handle {
+      pointer-events: all;
+      opacity: 0.8;
+      width: 10px;
+      height: 12px;
+      margin-right: 3px;
+      flex-shrink: 0;
+    }
+    /* Make chip flex so grip + label sit side-by-side */
+    .canvas-el:hover .canvas-el-chip,
+    .canvas-el.el-selected .canvas-el-chip {
+      display: inline-flex;
+      align-items: center;
+    }
+    .dragging-block { opacity: 0.35; cursor: grabbing; }
+
+    /* Drop-position indicator line */
+    .drop-indicator {
+      height: 2px;
+      background: var(--brand-regular);
+      border-radius: 1px;
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+    .drop-indicator--prop   { margin: -5px 0; }
+    .drop-indicator--canvas { width: 100%; }
 
   </style>
 </head>
@@ -2886,7 +2920,7 @@
             Featured Products
           </div>
           <!-- Horizontal scrolling pairs — 2 per row, 2 rows visible -->
-          <div class="canvas-el" onclick="selectCanvasElement(this,'weekly','carousel','Product carousel',event)" style="display:flex;align-items:flex-start;overflow:hidden;width:100%;position:relative;">
+          <div id="weekly-carousel-el" class="canvas-el" onclick="selectCanvasElement(this,'weekly','carousel','Product carousel',event)" style="display:flex;align-items:flex-start;overflow:hidden;width:100%;position:relative;">
             <span class="canvas-el-chip">Product carousel</span>
             <!-- Pair 1 -->
             <div style="flex-shrink:0;padding:10px 12px 10px 0;display:flex;gap:12px;">
@@ -2969,7 +3003,7 @@
             <span class="canvas-el-chip">Section header</span>
             Curated deals
           </div>
-          <div class="canvas-el" onclick="selectCanvasElement(this,'curated','carousel','Product carousel',event)" style="display:flex;gap:14px;align-items:stretch;overflow:hidden;position:relative;">
+          <div id="curated-carousel-el" class="canvas-el" onclick="selectCanvasElement(this,'curated','carousel','Product carousel',event)" style="display:flex;gap:14px;align-items:stretch;overflow:hidden;position:relative;">
             <span class="canvas-el-chip">Product carousel</span>
 
             <!-- Curated card 1 -->
@@ -3355,22 +3389,22 @@
 
           <div class="props-fields-group">
             <div class="props-section-label">Blocks</div>
-            <div class="prop-element-row" onclick="openElementPanel('hero','image','Image')" data-element="image">
+            <div class="prop-element-row" onclick="openElementPanel('hero','image','Image')" data-element="image" data-canvas-el="hero-section">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 10.5L5 7.5L8 10L10.5 7.5L14.5 11.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5.5" cy="6" r="1.2" fill="currentColor"/></svg>
               <span class="prop-element-row__label">Image</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="prop-element-row" onclick="openElementPanel('hero','headline','Headline')" data-element="headline">
+            <div class="prop-element-row" onclick="openElementPanel('hero','headline','Headline')" data-element="headline" data-canvas-el="hero-headline-el">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4H13M8 4V13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
               <span class="prop-element-row__label">Headline</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="prop-element-row" onclick="openElementPanel('hero','text','Text')" data-element="text">
+            <div class="prop-element-row" onclick="openElementPanel('hero','text','Text')" data-element="text" data-canvas-el="hero-text-el">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4.5H14M2 8H11M2 11.5H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
               <span class="prop-element-row__label">Text</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="prop-element-row" onclick="openElementPanel('hero','button','Button')" data-element="button">
+            <div class="prop-element-row" onclick="openElementPanel('hero','button','Button')" data-element="button" data-canvas-el="hero-button-el">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="5" width="13" height="6" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 8H10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
               <span class="prop-element-row__label">Button</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -3407,23 +3441,6 @@
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
               Browse creative library
             </button>
-            <div class="image-ai-card">
-              <div class="image-ai-card__header">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="color:#7A52CC;flex-shrink:0">
-                  <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
-                  <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
-                </svg>
-                <span class="image-ai-card__label">Generate with AI</span>
-              </div>
-              <textarea class="prop-textarea" rows="3" placeholder="Describe the image you want…" style="border-radius:6px;font-size:12px;">Generate an image of Memorial Day BBQ theme</textarea>
-              <button class="prop-ai-btn" style="height:32px;font-size:12px;border-radius:6px;">
-                <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
-                  <path d="M9.5 2L10.7 5.3L14 6.5L10.7 7.7L9.5 11L8.3 7.7L5 6.5L8.3 5.3L9.5 2Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
-                  <path d="M4 10L4.6 11.4L6 12L4.6 12.6L4 14L3.4 12.6L2 12L3.4 11.4L4 10Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
-                </svg>
-                Generate image
-              </button>
-            </div>
           </div>
           <div class="props-divider"></div>
           <div class="props-fields-group">
@@ -3627,12 +3644,12 @@
 
           <div class="props-fields-group">
             <div class="props-section-label">Blocks</div>
-            <div class="prop-element-row" onclick="openElementPanel('weekly','header','Section header')" data-element="weekly-header">
+            <div class="prop-element-row" onclick="openElementPanel('weekly','header','Section header')" data-element="weekly-header" data-canvas-el="weekly-header-el">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4H13M8 4V13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
               <span class="prop-element-row__label">Section header</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="prop-element-row" onclick="openElementPanel('weekly','carousel','Product carousel')" data-element="weekly-carousel">
+            <div class="prop-element-row" onclick="openElementPanel('weekly','carousel','Product carousel')" data-element="weekly-carousel" data-canvas-el="weekly-carousel-el">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
               <span class="prop-element-row__label">Product carousel</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -3828,12 +3845,12 @@
 
           <div class="props-fields-group">
             <div class="props-section-label">Blocks</div>
-            <div class="prop-element-row" onclick="openElementPanel('curated','header','Section header')" data-element="curated-header">
+            <div class="prop-element-row" onclick="openElementPanel('curated','header','Section header')" data-element="curated-header" data-canvas-el="curated-header-el">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4H13M8 4V13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
               <span class="prop-element-row__label">Section header</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div class="prop-element-row" onclick="openElementPanel('curated','carousel','Product carousel')" data-element="curated-carousel">
+            <div class="prop-element-row" onclick="openElementPanel('curated','carousel','Product carousel')" data-element="curated-carousel" data-canvas-el="curated-carousel-el">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
               <span class="prop-element-row__label">Product carousel</span>
               <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -4152,6 +4169,42 @@
           </div>
         </div><!-- /view-footer -->
 
+        <!-- ── Generic injected-block view (reused for all added blocks) ── -->
+        <div class="section-view element-view" id="view-injected-block" style="display:none">
+          <div class="props-fields-group">
+            <div class="props-section-label">Style</div>
+            <div class="props-field">
+              <div class="props-field-label">Alignment</div>
+              <div class="prop-seg">
+                <button class="prop-seg__btn active" onclick="setInjectedBlockAlign(this,'left')">Left</button>
+                <button class="prop-seg__btn" onclick="setInjectedBlockAlign(this,'center')">Center</button>
+                <button class="prop-seg__btn" onclick="setInjectedBlockAlign(this,'right')">Right</button>
+              </div>
+            </div>
+            <div class="props-field">
+              <div class="props-field-label">Padding</div>
+              <div class="prop-seg">
+                <button class="prop-seg__btn" onclick="setInjectedBlockPadding(this,'4px 0')">Compact</button>
+                <button class="prop-seg__btn active" onclick="setInjectedBlockPadding(this,'10px 0')">Normal</button>
+                <button class="prop-seg__btn" onclick="setInjectedBlockPadding(this,'20px 0')">Spacious</button>
+              </div>
+            </div>
+          </div>
+          <div class="props-divider"></div>
+          <div class="props-fields-group">
+            <div class="prop-toggle-row">
+              <span class="prop-toggle-label">Visible</span>
+              <label class="prop-toggle"><input type="checkbox" checked id="injected-block-vis-toggle" onchange="setInjectedBlockVisible(this.checked)" /><span class="prop-toggle__track"></span></label>
+            </div>
+          </div>
+          <div class="props-divider"></div>
+          <div class="props-fields-group">
+            <button onclick="removeSelectedInjectedBlock()" style="width:100%;padding:8px;border:1px solid #D93838;border-radius:6px;background:none;color:#D93838;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">
+              Remove block
+            </button>
+          </div>
+        </div><!-- /view-injected-block -->
+
       </div><!-- /props-panel__inner -->
     </div><!-- /props-panel -->
 
@@ -4357,6 +4410,7 @@
 
     // Track selected canvas element
     let selectedCanvasEl = null;
+    let _selectedInjectedBlock = null;
 
     /* ── Inline text editing ── */
     let inlineEditEl = null;
@@ -4373,6 +4427,18 @@
 
       el.setAttribute('contenteditable', 'true');
       el.focus();
+
+      // <button> intercepts Space to fire a click instead of inserting a character.
+      // Catch it at keydown and insert the space manually.
+      if (el.tagName === 'BUTTON') {
+        el._editSpaceHandler = e => {
+          if (e.key === ' ') {
+            e.preventDefault();
+            document.execCommand('insertText', false, ' ');
+          }
+        };
+        el.addEventListener('keydown', el._editSpaceHandler);
+      }
 
       // Place caret at end of the last text node (skipping the chip)
       const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
@@ -4403,6 +4469,10 @@
       el.removeAttribute('contenteditable');
       el.classList.remove('el-editing');
       el.removeEventListener('input', _syncEditToPanel);
+      if (el._editSpaceHandler) {
+        el.removeEventListener('keydown', el._editSpaceHandler);
+        delete el._editSpaceHandler;
+      }
       const chip = el.querySelector('.canvas-el-chip');
       if (chip) chip.removeAttribute('contenteditable');
     }
@@ -4416,13 +4486,17 @@
         ? fullText.slice(chipText.length).trim()
         : fullText.trim();
 
-      // Update the first visible text input or textarea in the panel
-      const input = document.querySelector('#props-panel .section-view:not([style*="display: none"]) .prop-input[type="text"], #props-panel .section-view:not([style*="display: none"]) .prop-textarea');
+      // Update the first visible text input or textarea in the panel (skip URL fields)
+      const input = document.querySelector(
+        '#props-panel .section-view:not([style*="display: none"]) .prop-input[type="text"]:not([placeholder="https://"]), ' +
+        '#props-panel .section-view:not([style*="display: none"]) .prop-textarea'
+      );
       if (input) input.value = text;
     }
 
     function selectCanvasElement(el, sectionId, elementKey, elementLabel, event) {
       event.stopPropagation(); // don't bubble up to the section-hover-zone click
+      actionsPopup.classList.remove('visible');
 
       // If clicking a different element while editing, stop the previous edit
       if (inlineEditEl && inlineEditEl !== el) stopInlineEdit();
@@ -4457,6 +4531,8 @@
       _showSectionHeader();
       // Clear canvas element highlight
       if (selectedCanvasEl) { selectedCanvasEl.classList.remove('el-selected'); selectedCanvasEl = null; }
+      // Clear injected block highlight
+      if (_selectedInjectedBlock) { _selectedInjectedBlock.classList.remove('el-selected'); _selectedInjectedBlock = null; }
     }
 
     /* ── Drill into an element ── */
@@ -4505,6 +4581,7 @@
       document.getElementById('props-tabs-bar').style.display = 'flex';
       document.querySelectorAll('.prop-element-row').forEach(r => r.classList.remove('element-active'));
       if (selectedCanvasEl) { selectedCanvasEl.classList.remove('el-selected'); selectedCanvasEl = null; }
+      if (_selectedInjectedBlock) { _selectedInjectedBlock.classList.remove('el-selected'); _selectedInjectedBlock = null; }
     }
 
     function toggleSeg(btn) {
@@ -4617,11 +4694,29 @@
       'Product carousel': {
         outlineLabel: 'Product Carousel',
         sectionKey: 'product-carousel',
+        propsView: (sectionKey, label) => `
+          <div class="props-fields-group">
+            <div class="props-section-label">Blocks</div>
+            <div class="prop-element-row">
+              <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4H13M8 4V13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+              <span class="prop-element-row__label">Headline</span>
+              <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="prop-element-row">
+              <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/></svg>
+              <span class="prop-element-row__label">Product carousel</span>
+              <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <button class="outline-add-btn js-add-block-btn" style="padding:6px 4px;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="#0A5546"/><path d="M8 5V11M5 8H11" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Add block
+            </button>
+          </div>`,
         html: `
           <span class="section-hover-label">Product Carousel</span>
           ${_SECTION_REORDER_BTNS}
           <div style="background:#fff;padding:16px 0 16px 16px;">
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:20px;font-weight:700;color:#278657;margin-bottom:10px;padding-right:16px;">New Arrivals</div>
+            <div style="font-family:'Idiqlat',Georgia,serif;font-size:28px;font-weight:400;color:#278657;margin-bottom:4px;padding-right:16px;">New Arrivals</div>
             <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;padding-right:16px;scrollbar-width:none;">
               ${['7d5c22ab-75e1-4695-b702-a9244089fe5b','a8bf1e8f-e7f4-451d-bef8-660b847f2f41','4bc97ed6-d4da-4ed8-908a-7be0b3aba4d8','f2a46a9f-747a-4377-aaf0-f637d30619b5'].map((h,i) => `
               <div style="width:80px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;">
@@ -4842,6 +4937,36 @@
       zone.addEventListener('mouseleave', scheduleHideActions);
       zone.addEventListener('click',      () => selectCanvasSection(zone));
 
+      // Build and register a props-panel view if the config provides a template
+      if (config.propsView) {
+        const sectionKey = zone.dataset.section;
+        const viewId     = 'view-' + sectionKey;
+
+        const view = document.createElement('div');
+        view.className  = 'section-view';
+        view.id         = viewId;
+        view.style.display = 'none';
+        view.innerHTML  = config.propsView(sectionKey, config.outlineLabel);
+
+        // Wire "Add block" button
+        const addBlockBtn = view.querySelector('.js-add-block-btn');
+        if (addBlockBtn) {
+          addBlockBtn.addEventListener('click', () => openAddElementPanel(sectionKey, config.outlineLabel));
+        }
+
+        document.querySelector('.props-panel__inner').appendChild(view);
+
+        SECTION_VIEW_MAP[sectionKey] = viewId;
+        SECTION_LABELS[sectionKey]   = config.outlineLabel;
+
+        // Attach drag handles to the block rows
+        view.querySelectorAll('.props-fields-group').forEach(g => {
+          if (g.querySelector('.prop-element-row') && typeof window.initPropContainer === 'function') {
+            window.initPropContainer(g);
+          }
+        });
+      }
+
       // Insert before about-zone so it appears naturally in the body
       const frame     = document.getElementById('device-frame');
       const aboutZone = document.getElementById('about-zone');
@@ -4960,11 +5085,7 @@
         const el = document.createElement('div');
         el.className = 'injected-block injected-block--new';
         el.style.cssText = 'padding:10px 0;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <p style="font-size:13px;color:inherit;line-height:1.6;font-family:inherit;margin:0;opacity:0.85;">
+        el.innerHTML = `          <p style="font-size:13px;color:inherit;line-height:1.6;font-family:inherit;margin:0;opacity:0.85;">
             Add your text here. Click to edit this block and customize the content for your audience.
           </p>`;
         return el;
@@ -4973,11 +5094,7 @@
         const el = document.createElement('div');
         el.className = 'injected-block injected-block--new';
         el.style.cssText = 'padding:10px 0;display:flex;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <button style="background:#f8c358;border:none;border-radius:4px;padding:9px 18px;font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:700;color:#242529;cursor:pointer;">
+        el.innerHTML = `          <button style="background:#f8c358;border:none;border-radius:4px;padding:9px 18px;font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:700;color:#242529;cursor:pointer;">
             Button label
           </button>`;
         return el;
@@ -4986,22 +5103,14 @@
         const el = document.createElement('div');
         el.className = 'injected-block injected-block--new';
         el.style.cssText = 'padding:10px 0;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <hr style="border:none;border-top:1px solid rgba(128,128,128,0.35);margin:0;">`;
+        el.innerHTML = `          <hr style="border:none;border-top:1px solid rgba(128,128,128,0.35);margin:0;">`;
         return el;
       },
       Image: () => {
         const el = document.createElement('div');
         el.className = 'injected-block injected-block--new';
         el.style.cssText = 'padding:8px 0;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div style="width:100%;height:110px;background:rgba(0,0,0,.15);border-radius:8px;border:2px dashed rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;cursor:pointer;">
+        el.innerHTML = `          <div style="width:100%;height:110px;background:rgba(0,0,0,.15);border-radius:8px;border:2px dashed rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;cursor:pointer;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/><path d="M2 15l6-6 6 6 3-3 5 5" stroke="rgba(255,255,255,.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="9.5" r="1.5" stroke="rgba(255,255,255,.6)" stroke-width="1.2"/></svg>
             <span style="font-size:11px;color:rgba(255,255,255,.6);font-family:inherit;">Click to upload image</span>
           </div>`;
@@ -5011,11 +5120,7 @@
         const el = document.createElement('div');
         el.className = 'injected-block injected-block--new';
         el.style.cssText = 'padding:8px 16px;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div style="width:100%;height:110px;background:#1C1C1E;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:8px;">
+        el.innerHTML = `          <div style="width:100%;height:110px;background:#1C1C1E;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:8px;">
             <div style="width:40px;height:40px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4.5 3l8 4-8 4V3z" fill="white"/></svg>
             </div>
@@ -5027,11 +5132,7 @@
         const el = document.createElement('div');
         el.className = 'injected-block injected-block--new';
         el.style.cssText = 'padding:10px 0;display:flex;align-items:center;gap:10px;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div style="width:36px;height:36px;background:rgba(255,255,255,.18);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        el.innerHTML = `          <div style="width:36px;height:36px;background:rgba(255,255,255,.18);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1.5l2.25 4.5 5 .73-3.625 3.53.855 4.975L9 12.75l-4.48 2.455.855-4.975L1.75 6.73l5-.73L9 1.5z" stroke="rgba(255,255,255,.85)" stroke-width="1.3" stroke-linejoin="round"/></svg>
           </div>
           <span style="font-size:13px;color:rgba(255,255,255,.9);font-family:inherit;">Icon label</span>`;
@@ -5041,11 +5142,7 @@
         const el = document.createElement('div');
         el.className = 'injected-block injected-block--new';
         el.style.cssText = 'padding:10px 0;display:flex;flex-direction:column;gap:8px;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <a href="#" style="font-size:12px;color:rgba(255,255,255,.9);text-decoration:underline;font-weight:600;font-family:inherit;" onclick="return false;">Learn more →</a>
+        el.innerHTML = `          <a href="#" style="font-size:12px;color:rgba(255,255,255,.9);text-decoration:underline;font-weight:600;font-family:inherit;" onclick="return false;">Learn more →</a>
           <a href="#" style="font-size:12px;color:rgba(255,255,255,.9);text-decoration:underline;font-weight:600;font-family:inherit;" onclick="return false;">Terms &amp; Conditions</a>
           <a href="#" style="font-size:12px;color:rgba(255,255,255,.9);text-decoration:underline;font-weight:600;font-family:inherit;" onclick="return false;">Privacy Policy</a>`;
         return el;
@@ -5068,11 +5165,7 @@
             <div style="height:6px;border-radius:3px;background:rgba(0,0,0,.12);width:100%;"></div>
             <div style="height:6px;border-radius:3px;background:rgba(0,0,0,.08);width:60%;"></div>
           </div>`).join('');
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div style="display:flex;gap:10px;overflow-x:auto;padding-right:16px;padding-bottom:2px;scrollbar-width:none;">${cards}</div>`;
+        el.innerHTML = `          <div style="display:flex;gap:10px;overflow-x:auto;padding-right:16px;padding-bottom:2px;scrollbar-width:none;">${cards}</div>`;
         return el;
       },
     };
@@ -5085,6 +5178,14 @@
       if (!factory) { closeAddElementPanel(); return; }
 
       const block = factory();
+
+      // Make it behave like a canvas element (hover outline, chip label, click → panel)
+      block.classList.add('canvas-el');
+      const chip = document.createElement('span');
+      chip.className = 'canvas-el-chip';
+      chip.textContent = type;
+      block.prepend(chip);
+      block.addEventListener('click', (e) => selectInjectedBlock(block, type, e));
 
       // Find the last native content child of the zone:
       // skip .section-hover-label, .section-reorder, and already-injected blocks
@@ -5102,11 +5203,138 @@
       }
 
       (container || zone).appendChild(block);
+      if (typeof initBlockDrag === 'function') initBlockDrag(block);
+      addBlockToPanel(block, type, zone.dataset.section);
 
       // Scroll block into view
       setTimeout(() => block.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
 
       closeAddElementPanel();
+    }
+
+    /* ── Injected block selection + panel ── */
+    function selectInjectedBlock(el, type, event) {
+      event.stopPropagation();
+      actionsPopup.classList.remove('visible');
+
+      // Clear any existing canvas-el selection
+      if (selectedCanvasEl) { selectedCanvasEl.classList.remove('el-selected'); selectedCanvasEl = null; }
+
+      // Deselect previous injected block
+      if (_selectedInjectedBlock && _selectedInjectedBlock !== el) {
+        _selectedInjectedBlock.classList.remove('el-selected');
+      }
+      _selectedInjectedBlock = el;
+      el.classList.add('el-selected');
+
+      // Select the parent zone without closing the panel
+      const zone = el.closest('.section-hover-zone');
+      if (zone) {
+        if (selectedZone && selectedZone !== zone) selectedZone.classList.remove('selected');
+        selectedZone = zone;
+        zone.classList.add('selected');
+      }
+
+      // Sync the visible toggle to match block's current visibility
+      const toggle = document.getElementById('injected-block-vis-toggle');
+      if (toggle) toggle.checked = (el.style.opacity !== '0.35');
+
+      // Sync alignment seg buttons to current block text alignment
+      const currentAlign = el.style.textAlign || 'left';
+      document.querySelectorAll('#view-injected-block .prop-seg').forEach((seg, si) => {
+        if (si === 0) { // first seg = alignment
+          const btns = seg.querySelectorAll('.prop-seg__btn');
+          const aligns = ['left','center','right'];
+          btns.forEach((btn, i) => btn.classList.toggle('active', aligns[i] === currentAlign));
+        }
+      });
+
+      // Show the generic block view in the props panel
+      document.querySelectorAll('.section-view').forEach(v => v.style.display = 'none');
+      document.getElementById('view-injected-block').style.display = 'flex';
+
+      // Element-level header
+      document.getElementById('props-header-section').style.display = 'none';
+      document.getElementById('props-header-element').style.display = 'flex';
+      document.getElementById('props-element-title').textContent = type;
+
+      propsPanel.classList.add('open');
+      positionPropPanel();
+    }
+
+    function setInjectedBlockAlign(btn, align) {
+      toggleSeg(btn);
+      if (_selectedInjectedBlock) {
+        _selectedInjectedBlock.style.textAlign = align;
+        _selectedInjectedBlock.style.alignItems = align === 'center' ? 'center' : align === 'right' ? 'flex-end' : 'flex-start';
+      }
+    }
+
+    function setInjectedBlockPadding(btn, padding) {
+      toggleSeg(btn);
+      if (_selectedInjectedBlock) {
+        _selectedInjectedBlock.style.padding = padding;
+      }
+    }
+
+    function setInjectedBlockVisible(checked) {
+      if (_selectedInjectedBlock) {
+        _selectedInjectedBlock.style.opacity = checked ? '' : '0.35';
+        _selectedInjectedBlock.style.pointerEvents = checked ? '' : 'none';
+      }
+    }
+
+    function removeSelectedInjectedBlock() {
+      if (_selectedInjectedBlock) {
+        const blockId = _selectedInjectedBlock.id;
+        if (blockId) {
+          const row = document.querySelector(`.prop-element-row[data-canvas-el="${blockId}"]`);
+          if (row) row.remove();
+        }
+        _selectedInjectedBlock.remove();
+        _selectedInjectedBlock = null;
+        closePropPanel();
+      }
+    }
+
+    const BLOCK_ROW_ICONS = {
+      Text:    `<path d="M2 4.5H14M2 8H11M2 11.5H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>`,
+      Button:  `<rect x="1.5" y="5" width="13" height="6" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 8H10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>`,
+      Divider: `<path d="M2 8H14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>`,
+      Image:   `<rect x="1.5" y="3" width="13" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 10.5L5 7.5L8 10L10.5 7.5L14.5 11.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5.5" cy="6" r="1.2" fill="currentColor"/>`,
+      Video:   `<rect x="1.5" y="3" width="13" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M6.5 6L10.5 8L6.5 10V6Z" fill="currentColor"/>`,
+      Icon:    `<path d="M8 2l1.8 3.6L14 6.2l-3 2.9.7 4.1L8 11.1l-3.7 2.1.7-4.1-3-2.9 4.2-.6L8 2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>`,
+      Links:   `<path d="M5.5 8h5M3 6a2 2 0 0 1 0 4h-1a2 2 0 0 1 0-4h1M13 6a2 2 0 0 1 0 4h-1a2 2 0 0 1 0-4h1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>`,
+      Product: `<rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.2"/>`,
+    };
+
+    function addBlockToPanel(block, type, sectionId) {
+      if (!block.id) {
+        block.id = 'ib-' + Date.now() + '-' + Math.floor(Math.random() * 9999);
+      }
+      const sectionView = document.getElementById('view-' + sectionId);
+      if (!sectionView) return;
+      let blocksGroup = null;
+      sectionView.querySelectorAll('.props-fields-group').forEach(g => {
+        const lbl = g.querySelector('.props-section-label');
+        if (lbl && lbl.textContent.trim() === 'Blocks') blocksGroup = g;
+      });
+      if (!blocksGroup) return;
+
+      const row = document.createElement('div');
+      row.className = 'prop-element-row';
+      row.dataset.canvasEl = block.id;
+      row.innerHTML = `
+        <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none">${BLOCK_ROW_ICONS[type] || BLOCK_ROW_ICONS.Text}</svg>
+        <span class="prop-element-row__label">${type}</span>
+        <svg class="prop-element-row__chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6.5 4.5L10 8L6.5 11.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      `;
+      row.addEventListener('click', e => selectInjectedBlock(block, type, e));
+
+      const addBtn = blocksGroup.querySelector('.outline-add-btn');
+      blocksGroup.insertBefore(row, addBtn || null);
+
+      if (typeof initPropRow === 'function') initPropRow(row);
     }
 
     /* ── Spacing controls ── */
@@ -5584,6 +5812,167 @@
       list.appendChild(newItem);
       closeSaveTemplateModal();
     }
+
+    /* ══════════════════════════════════════════════════════
+       DRAG-TO-REORDER
+       Uses container-level dragover/drop so gaps between items
+       and the indicator line itself never swallow events.
+       ══════════════════════════════════════════════════════ */
+    (function () {
+      const GRIP = `<svg width="10" height="14" viewBox="0 0 10 14" fill="currentColor" aria-hidden="true"><circle cx="3" cy="2.5" r="1.2"/><circle cx="7" cy="2.5" r="1.2"/><circle cx="3" cy="7" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="3" cy="11.5" r="1.2"/><circle cx="7" cy="11.5" r="1.2"/></svg>`;
+
+      /* ── 1. Prop-panel row reorder ── */
+      const propLine = document.createElement('div');
+      propLine.className = 'drop-indicator drop-indicator--prop';
+
+      let propSrc = null;
+
+      // Mirror panel row order onto the canvas — only when all mapped elements share a parent
+      function syncCanvasToRows(container) {
+        const canvasEls = Array.from(container.querySelectorAll(':scope > .prop-element-row'))
+          .map(r => r.dataset.canvasEl ? document.getElementById(r.dataset.canvasEl) : null)
+          .filter(Boolean);
+        if (canvasEls.length < 2) return;
+        const parent = canvasEls[0].parentElement;
+        if (!parent || !canvasEls.every(el => el.parentElement === parent)) return;
+        canvasEls.forEach(el => parent.appendChild(el));
+      }
+
+      // Return the row to insert before, or null to append at end
+      function propInsertTarget(container, clientY) {
+        for (const row of container.querySelectorAll(':scope > .prop-element-row')) {
+          if (row === propSrc) continue;
+          const r = row.getBoundingClientRect();
+          if (clientY < r.top + r.height / 2) return row;
+        }
+        return null;
+      }
+
+      // Initialise drag on a single prop row — idempotent (safe to call on new rows)
+      function initPropRow(row) {
+        if (row.dataset.dragInit) return;
+        row.dataset.dragInit = '1';
+        const handle = document.createElement('span');
+        handle.className = 'drag-handle prop-drag-handle';
+        handle.innerHTML = GRIP;
+        handle.addEventListener('click',     e => e.stopPropagation());
+        handle.addEventListener('mousedown', e => e.stopPropagation());
+        row.prepend(handle);
+        row.setAttribute('draggable', 'true');
+        row.addEventListener('dragstart', e => {
+          propSrc = row;
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', '');
+          requestAnimationFrame(() => row.classList.add('dragging-row'));
+        });
+        row.addEventListener('dragend', () => {
+          row.classList.remove('dragging-row');
+          propSrc = null;
+          propLine.remove();
+        });
+      }
+      window.initPropRow = initPropRow;
+
+      function initPropContainer(container) {
+        window.initPropContainer = initPropContainer; // expose after definition
+        container.querySelectorAll('.prop-element-row').forEach(initPropRow);
+
+        // Container handles dragover/drop — covers gaps and the indicator itself
+        container.addEventListener('dragover', e => {
+          if (!propSrc || !container.contains(propSrc)) return;
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          container.insertBefore(propLine, propInsertTarget(container, e.clientY));
+        });
+        container.addEventListener('drop', e => {
+          if (!propSrc || !container.contains(propSrc)) return;
+          e.preventDefault();
+          container.insertBefore(propSrc, propInsertTarget(container, e.clientY));
+          propLine.remove();
+          syncCanvasToRows(container);
+        });
+        container.addEventListener('dragleave', e => {
+          if (!container.contains(e.relatedTarget)) propLine.remove();
+        });
+      }
+
+      // Every props-fields-group that has at least one prop-element-row
+      document.querySelectorAll('.props-fields-group').forEach(g => {
+        if (g.querySelector('.prop-element-row')) initPropContainer(g);
+      });
+
+      /* ── 2. Canvas injected-block reorder ── */
+      const canvasLine = document.createElement('div');
+      canvasLine.className = 'drop-indicator drop-indicator--canvas';
+
+      let blockSrc = null;
+      let blockOk  = false; // true only when drag starts from the grip handle
+
+      function canvasInsertTarget(container, clientY) {
+        for (const block of container.querySelectorAll(':scope > .injected-block')) {
+          if (block === blockSrc) continue;
+          const r = block.getBoundingClientRect();
+          if (clientY < r.top + r.height / 2) return block;
+        }
+        return null;
+      }
+
+      function initCanvasContainer(container) {
+        container.addEventListener('dragover', e => {
+          if (!blockSrc || !container.contains(blockSrc)) return;
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          container.insertBefore(canvasLine, canvasInsertTarget(container, e.clientY));
+        });
+        container.addEventListener('drop', e => {
+          if (!blockSrc || !container.contains(blockSrc)) return;
+          e.preventDefault();
+          container.insertBefore(blockSrc, canvasInsertTarget(container, e.clientY));
+          canvasLine.remove();
+        });
+        container.addEventListener('dragleave', e => {
+          if (!container.contains(e.relatedTarget)) canvasLine.remove();
+        });
+      }
+
+      window.initBlockDrag = function (block) {
+        // Add grip handle inside the chip
+        const chip = block.querySelector('.canvas-el-chip');
+        if (chip) {
+          const h = document.createElement('span');
+          h.className = 'drag-handle block-drag-handle';
+          h.innerHTML = GRIP;
+          h.addEventListener('click', e => e.stopPropagation());
+          h.addEventListener('mousedown', () => { blockOk = true; });
+          chip.prepend(h);
+        }
+
+        block.setAttribute('draggable', 'true');
+        block.addEventListener('dragstart', e => {
+          if (!blockOk) { e.preventDefault(); return; }
+          blockSrc = block;
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', '');
+          requestAnimationFrame(() => block.classList.add('dragging-block'));
+        });
+        block.addEventListener('dragend', () => {
+          block.classList.remove('dragging-block');
+          blockSrc = null;
+          blockOk  = false;
+          canvasLine.remove();
+        });
+
+        // Init the parent container the first time a block lands in it
+        const container = block.parentElement;
+        if (container && !container.dataset.blockDragInit) {
+          container.dataset.blockDragInit = '1';
+          initCanvasContainer(container);
+        }
+      };
+
+      document.addEventListener('mouseup', () => { blockOk = false; });
+    })();
+
   </script>
 
   <!-- ── Template preview bar ── -->
