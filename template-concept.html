@@ -1968,48 +1968,6 @@
     .template-previewing .props-panel { display: none; }
     .template-previewing .toolbar { display: none; }
 
-    /* ── Injected blocks ── */
-    .injected-block {
-      position: relative;
-      /* no background — inherits from the section container */
-    }
-    .injected-block__delete {
-      display: none;
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 22px;
-      height: 22px;
-      background: rgba(217,56,56,.9);
-      border: none;
-      border-radius: 4px;
-      color: #fff;
-      font-size: 11px;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      z-index: 5;
-    }
-    .injected-block:hover .injected-block__delete { display: flex; }
-    @keyframes block-pop-in {
-      0%   { opacity: 0; transform: translateY(6px); outline-color: rgba(79,70,229,.6); }
-      30%  { opacity: 1; transform: translateY(0);   outline-color: rgba(79,70,229,.5); }
-      100% { outline-color: transparent; }
-    }
-    .injected-block--new {
-      animation: block-pop-in 0.9s ease forwards;
-      outline: 2px solid transparent;
-      border-radius: 3px;
-    }
-
-    /* ── Outline item: new-section flash ── */
-    @keyframes outline-item-flash {
-      0%   { background: #E6F5EC; }
-      60%  { background: #E6F5EC; }
-      100% { background: transparent; }
-    }
-    .outline-item--flash { animation: outline-item-flash 1.2s ease forwards; }
-
     /* ── Save template modal ── */
     .modal-backdrop {
       position: fixed; inset: 0; background: rgba(0,0,0,.4);
@@ -2299,7 +2257,7 @@
         <!-- BODY section -->
         <div class="outline-section">
           <div class="outline-section__label">Body</div>
-          <div class="outline-section-container" id="outline-body-container">
+          <div class="outline-section-container">
 
             <div class="outline-item" id="outline-hero" onclick="selectSection(this, 'hero')">
               <span class="outline-item__icon">
@@ -2362,7 +2320,7 @@
               </button>
             </div>
 
-            <button class="outline-add-btn" id="outline-body-add-btn" onclick="openAddPanel()">
+            <button class="outline-add-btn" onclick="openAddPanel()">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <circle cx="8" cy="8" r="8" fill="#0A5546"/>
                 <path d="M8 5V11M5 8H11" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
@@ -2446,7 +2404,7 @@
           <div style="height:1px;background:var(--gs-20);margin:6px 0;"></div>
           <div class="add-panel-section-label">Frequently used</div>
 
-          <div class="add-list-item" onclick="addPrebuiltSection('Hero banner')">
+          <div class="add-list-item" onclick="closeAddPanel()">
             <div class="add-list-item__thumb">
               <svg width="48" height="34" viewBox="0 0 48 34" fill="none"><rect width="48" height="34" fill="#E8F3EF"/><rect x="4" y="4" width="40" height="17" rx="2" fill="#B8DDD4"/><rect x="4" y="24" width="16" height="2" rx="1" fill="#56595E"/><rect x="4" y="28" width="24" height="2" rx="1" fill="#C8CACD"/></svg>
             </div>
@@ -2456,7 +2414,7 @@
             </div>
           </div>
 
-          <div class="add-list-item" onclick="addPrebuiltSection('Product carousel')">
+          <div class="add-list-item" onclick="closeAddPanel()">
             <div class="add-list-item__thumb">
               <svg width="48" height="34" viewBox="0 0 48 34" fill="none"><rect width="48" height="34" fill="#F0F1F2"/><rect x="4" y="6" width="12" height="14" rx="1.5" fill="#D5D7DA"/><rect x="18" y="6" width="12" height="14" rx="1.5" fill="#D5D7DA"/><rect x="32" y="6" width="12" height="14" rx="1.5" fill="#D5D7DA"/><rect x="4" y="23" width="8" height="2" rx="1" fill="#A0A3A8"/><rect x="18" y="23" width="8" height="2" rx="1" fill="#A0A3A8"/><rect x="32" y="23" width="8" height="2" rx="1" fill="#A0A3A8"/></svg>
             </div>
@@ -2466,7 +2424,7 @@
             </div>
           </div>
 
-          <div class="add-list-item" onclick="addPrebuiltSection('Rich text')" style="margin-bottom:12px;">
+          <div class="add-list-item" onclick="closeAddPanel()" style="margin-bottom:12px;">
             <div class="add-list-item__thumb">
               <svg width="48" height="34" viewBox="0 0 48 34" fill="none"><rect width="48" height="34" fill="#F5F5F7"/><rect x="6" y="7" width="24" height="4" rx="1.5" fill="#343538"/><rect x="6" y="15" width="36" height="2" rx="1" fill="#A0A3A8"/><rect x="6" y="19" width="36" height="2" rx="1" fill="#A0A3A8"/><rect x="6" y="25" width="14" height="5" rx="2" fill="#278657"/></svg>
             </div>
@@ -2509,28 +2467,28 @@
 
           <div class="add-panel-section-label">Featured</div>
 
-          <div class="add-list-item" data-name="Loyalty Tiers" onclick="addPrebuiltSection('Loyalty Tiers')">
+          <div class="add-list-item" data-name="Loyalty Tiers" onclick="closeAddPanel()">
             <div class="add-list-item__thumb"><svg width="48" height="34" viewBox="0 0 48 34" fill="none"><rect width="48" height="34" fill="#ECF6F3"/><rect x="4" y="5" width="40" height="16" rx="2" fill="#B8DDD4"/><rect x="4" y="24" width="14" height="2" rx="1" fill="#0A5546"/><rect x="4" y="28" width="22" height="2" rx="1" fill="#B8DDD4"/></svg></div>
             <div class="add-list-item__info">
               <div class="add-list-item__name">Loyalty Tiers</div>
               <div class="add-list-item__cat">Loyalty</div>
             </div>
           </div>
-          <div class="add-list-item" data-name="Loyalty Rewards" onclick="addPrebuiltSection('Loyalty Rewards')">
+          <div class="add-list-item" data-name="Loyalty Rewards" onclick="closeAddPanel()">
             <div class="add-list-item__thumb"><svg width="48" height="34" viewBox="0 0 48 34" fill="none"><rect width="48" height="34" fill="#FFF8EC"/><rect x="4" y="5" width="40" height="16" rx="2" fill="#F8C358" opacity=".6"/><rect x="4" y="24" width="14" height="2" rx="1" fill="#56595E"/><rect x="4" y="28" width="22" height="2" rx="1" fill="#D5D7DA"/></svg></div>
             <div class="add-list-item__info">
               <div class="add-list-item__name">Loyalty Rewards</div>
               <div class="add-list-item__cat">Loyalty</div>
             </div>
           </div>
-          <div class="add-list-item" data-name="Weekly Flyer Collection" onclick="addPrebuiltSection('Product carousel')">
+          <div class="add-list-item" data-name="Weekly Flyer Collection" onclick="closeAddPanel()">
             <div class="add-list-item__thumb"><svg width="48" height="34" viewBox="0 0 48 34" fill="none"><rect width="48" height="34" fill="#F0F1F2"/><rect x="4" y="6" width="12" height="14" rx="1.5" fill="#D5D7DA"/><rect x="18" y="6" width="12" height="14" rx="1.5" fill="#D5D7DA"/><rect x="32" y="6" width="12" height="14" rx="1.5" fill="#D5D7DA"/><rect x="4" y="23" width="8" height="2" rx="1" fill="#A0A3A8"/><rect x="18" y="23" width="8" height="2" rx="1" fill="#A0A3A8"/></svg></div>
             <div class="add-list-item__info">
               <div class="add-list-item__name">Weekly Flyer Collection</div>
               <div class="add-list-item__cat">Flyer</div>
             </div>
           </div>
-          <div class="add-list-item" data-name="Promo Email Banner" onclick="addPrebuiltSection('Promo banner')">
+          <div class="add-list-item" data-name="Promo Email Banner" onclick="closeAddPanel()">
             <div class="add-list-item__thumb"><svg width="48" height="34" viewBox="0 0 48 34" fill="none"><rect width="48" height="34" fill="#F0F8FF"/><rect x="4" y="5" width="40" height="12" rx="2" fill="#BFDBFE"/><rect x="4" y="20" width="20" height="2" rx="1" fill="#56595E"/><rect x="4" y="24" width="14" height="2" rx="1" fill="#D5D7DA"/></svg></div>
             <div class="add-list-item__info">
               <div class="add-list-item__name">Promo Email Banner</div>
@@ -2542,14 +2500,14 @@
           <div class="add-panel-section-label" style="padding-top:10px;">General</div>
 
           <div class="add-cat-label">Promotional</div>
-          <div class="component-card" data-name="Hero banner" onclick="addPrebuiltSection('Hero banner')">
+          <div class="component-card" data-name="Hero banner" onclick="closeAddPanel()">
             <div class="component-card__thumb"><svg width="56" height="40" viewBox="0 0 56 40" fill="none"><rect width="56" height="40" fill="#E8F3EF"/><rect x="4" y="4" width="48" height="20" rx="2" fill="#B8DDD4"/><rect x="8" y="27" width="20" height="3" rx="1" fill="#56595E"/><rect x="8" y="32" width="12" height="2" rx="1" fill="#A0A3A8"/></svg></div>
             <div class="component-card__info">
               <div class="component-card__name">Hero banner</div>
               <div class="component-card__desc">Full-width image with headline &amp; CTA</div>
             </div>
           </div>
-          <div class="component-card" data-name="Promo banner" onclick="addPrebuiltSection('Promo banner')">
+          <div class="component-card" data-name="Promo banner" onclick="closeAddPanel()">
             <div class="component-card__thumb"><svg width="56" height="40" viewBox="0 0 56 40" fill="none"><rect width="56" height="40" fill="#FFF8E6"/><rect x="4" y="8" width="48" height="24" rx="2" fill="#F8C358" opacity="0.5"/><rect x="12" y="14" width="22" height="3" rx="1" fill="#343538"/><rect x="12" y="19" width="14" height="2" rx="1" fill="#56595E"/><rect x="36" y="16" width="12" height="8" rx="3" fill="#F8C358"/></svg></div>
             <div class="component-card__info">
               <div class="component-card__name">Promo banner</div>
@@ -2558,21 +2516,21 @@
           </div>
 
           <div class="add-cat-label">Products</div>
-          <div class="component-card" data-name="Product carousel" onclick="addPrebuiltSection('Product carousel')">
+          <div class="component-card" data-name="Product carousel" onclick="closeAddPanel()">
             <div class="component-card__thumb"><svg width="56" height="40" viewBox="0 0 56 40" fill="none"><rect width="56" height="40" fill="#F5F5F7"/><rect x="4" y="6" width="14" height="14" rx="2" fill="#D5D7DA"/><rect x="21" y="6" width="14" height="14" rx="2" fill="#D5D7DA"/><rect x="38" y="6" width="14" height="14" rx="2" fill="#D5D7DA"/><rect x="4" y="23" width="10" height="2" rx="1" fill="#A0A3A8"/><rect x="21" y="23" width="10" height="2" rx="1" fill="#A0A3A8"/><rect x="38" y="23" width="10" height="2" rx="1" fill="#A0A3A8"/></svg></div>
             <div class="component-card__info">
               <div class="component-card__name">Product carousel</div>
               <div class="component-card__desc">Scrollable row of product cards</div>
             </div>
           </div>
-          <div class="component-card" data-name="Curated deals" onclick="addPrebuiltSection('Curated deals')">
+          <div class="component-card" data-name="Curated deals" onclick="closeAddPanel()">
             <div class="component-card__thumb"><svg width="56" height="40" viewBox="0 0 56 40" fill="none"><rect width="56" height="40" fill="#E8F3EF"/><rect x="4" y="4" width="22" height="32" rx="2" fill="#B8DDD4"/><rect x="30" y="4" width="22" height="32" rx="2" fill="#B8DDD4"/><rect x="8" y="22" width="12" height="2" rx="1" fill="#278657"/><rect x="34" y="22" width="12" height="2" rx="1" fill="#278657"/></svg></div>
             <div class="component-card__info">
               <div class="component-card__name">Curated deals</div>
               <div class="component-card__desc">Handpicked deal cards with context</div>
             </div>
           </div>
-          <div class="component-card" data-name="Category grid" onclick="addPrebuiltSection('Category grid')">
+          <div class="component-card" data-name="Category grid" onclick="closeAddPanel()">
             <div class="component-card__thumb"><svg width="56" height="40" viewBox="0 0 56 40" fill="none"><rect width="56" height="40" fill="#F5F5F7"/><rect x="4" y="4" width="14" height="14" rx="2" fill="#D5D7DA"/><rect x="21" y="4" width="14" height="14" rx="2" fill="#D5D7DA"/><rect x="38" y="4" width="14" height="14" rx="2" fill="#D5D7DA"/><rect x="4" y="22" width="14" height="14" rx="2" fill="#D5D7DA"/><rect x="21" y="22" width="14" height="14" rx="2" fill="#D5D7DA"/><rect x="38" y="22" width="14" height="14" rx="2" fill="#D5D7DA"/></svg></div>
             <div class="component-card__info">
               <div class="component-card__name">Category grid</div>
@@ -2581,21 +2539,21 @@
           </div>
 
           <div class="add-cat-label">Content</div>
-          <div class="component-card" data-name="Rich text" onclick="addPrebuiltSection('Rich text')">
+          <div class="component-card" data-name="Rich text" onclick="closeAddPanel()">
             <div class="component-card__thumb"><svg width="56" height="40" viewBox="0 0 56 40" fill="none"><rect width="56" height="40" fill="#F5F5F7"/><rect x="6" y="8" width="28" height="4" rx="1.5" fill="#343538"/><rect x="6" y="16" width="44" height="2" rx="1" fill="#A0A3A8"/><rect x="6" y="20" width="44" height="2" rx="1" fill="#A0A3A8"/><rect x="6" y="24" width="36" height="2" rx="1" fill="#A0A3A8"/><rect x="6" y="30" width="18" height="5" rx="2" fill="#278657"/></svg></div>
             <div class="component-card__info">
               <div class="component-card__name">Rich text</div>
               <div class="component-card__desc">Headline, body copy, and CTA</div>
             </div>
           </div>
-          <div class="component-card" data-name="About us" onclick="addPrebuiltSection('About us')">
+          <div class="component-card" data-name="About us" onclick="closeAddPanel()">
             <div class="component-card__thumb"><svg width="56" height="40" viewBox="0 0 56 40" fill="none"><rect width="56" height="40" fill="#F5F5F7"/><rect x="4" y="6" width="22" height="16" rx="2" fill="#D5D7DA"/><rect x="30" y="6" width="22" height="16" rx="2" fill="#D5D7DA"/><rect x="4" y="26" width="16" height="2" rx="1" fill="#56595E"/><rect x="30" y="26" width="16" height="2" rx="1" fill="#56595E"/><rect x="4" y="30" width="22" height="2" rx="1" fill="#C8CACD"/><rect x="30" y="30" width="22" height="2" rx="1" fill="#C8CACD"/></svg></div>
             <div class="component-card__info">
               <div class="component-card__name">About us</div>
               <div class="component-card__desc">Image columns with captions</div>
             </div>
           </div>
-          <div class="component-card" data-name="Reviews" onclick="addPrebuiltSection('Reviews')" style="margin-bottom:12px;">
+          <div class="component-card" data-name="Reviews" onclick="closeAddPanel()" style="margin-bottom:12px;">
             <div class="component-card__thumb"><svg width="56" height="40" viewBox="0 0 56 40" fill="none"><rect width="56" height="40" fill="#F5F5F7"/><rect x="4" y="6" width="22" height="28" rx="2" fill="#fff" stroke="#D5D7DA" stroke-width="1"/><rect x="8" y="10" width="14" height="2" rx="1" fill="#F8C358"/><rect x="8" y="14" width="14" height="2" rx="1" fill="#A0A3A8"/><rect x="8" y="18" width="10" height="2" rx="1" fill="#A0A3A8"/><rect x="30" y="6" width="22" height="28" rx="2" fill="#fff" stroke="#D5D7DA" stroke-width="1"/><rect x="34" y="10" width="14" height="2" rx="1" fill="#F8C358"/><rect x="34" y="14" width="14" height="2" rx="1" fill="#A0A3A8"/><rect x="34" y="18" width="10" height="2" rx="1" fill="#A0A3A8"/></svg></div>
             <div class="component-card__info">
               <div class="component-card__name">Reviews</div>
@@ -2683,42 +2641,36 @@
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 2L12 12M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </button>
       </div>
-      <!-- Section target label -->
-      <div id="add-block-target-label" style="padding:0 12px 10px;font-size:11px;color:var(--gs-60);display:flex;align-items:center;gap:5px;">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1.5v9M1.5 6h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-        Adding to: <strong id="add-block-target-name" style="color:var(--gs-80);">—</strong>
-      </div>
-      <div style="height:1px;background:var(--gs-20);margin:0 12px 10px;"></div>
       <div class="add-blocks-grid">
-        <div class="element-type-card" onclick="addBlock('Text')">
+        <div class="element-type-card" onclick="closeAddElementPanel()">
           <div class="element-type-card__icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 6h14M4 10h10M4 14h14M4 18h7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
           <span class="element-type-card__label">Text</span>
         </div>
-        <div class="element-type-card" onclick="addBlock('Button')">
+        <div class="element-type-card" onclick="closeAddElementPanel()">
           <div class="element-type-card__icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2.5" y="7" width="17" height="8" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="M8 11h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
           <span class="element-type-card__label">Button</span>
         </div>
-        <div class="element-type-card" onclick="addBlock('Divider')">
+        <div class="element-type-card" onclick="closeAddElementPanel()">
           <div class="element-type-card__icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 11h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 7h16M3 15h16" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-dasharray="2 2.5" opacity=".3"/></svg></div>
           <span class="element-type-card__label">Divider</span>
         </div>
-        <div class="element-type-card" onclick="addBlock('Image')">
+        <div class="element-type-card" onclick="closeAddElementPanel()">
           <div class="element-type-card__icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="4" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M2 14.5l5-5 5 5 3.5-3.5L20 16" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="9" r="2" stroke="currentColor" stroke-width="1.3"/></svg></div>
           <span class="element-type-card__label">Image</span>
         </div>
-        <div class="element-type-card" onclick="addBlock('Video')">
+        <div class="element-type-card" onclick="closeAddElementPanel()">
           <div class="element-type-card__icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="4" width="13" height="14" rx="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M15 8.5l5-2.5v10l-5-2.5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M8.5 9l4 2-4 2V9z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
           <span class="element-type-card__label">Video</span>
         </div>
-        <div class="element-type-card" onclick="addBlock('Icon')">
+        <div class="element-type-card" onclick="closeAddElementPanel()">
           <div class="element-type-card__icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3l2 4.5 5 .7-3.5 3.4.8 5L11 14l-4.3 2.6.8-5L4 8.2l5-.7L11 3z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
           <span class="element-type-card__label">Icon</span>
         </div>
-        <div class="element-type-card" onclick="addBlock('Links')">
+        <div class="element-type-card" onclick="closeAddElementPanel()">
           <div class="element-type-card__icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M9 13a4 4 0 0 0 5.66.06l2.83-2.83a4 4 0 0 0-5.65-5.65l-1.42 1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M13 9a4 4 0 0 0-5.66-.06L4.51 11.77a4 4 0 0 0 5.65 5.65l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></div>
           <span class="element-type-card__label">Links</span>
         </div>
-        <div class="element-type-card" onclick="addBlock('Product')">
+        <div class="element-type-card" onclick="closeAddElementPanel()">
           <div class="element-type-card__icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="12" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="3" y="12" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/><rect x="12" y="12" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/></svg></div>
           <span class="element-type-card__label">Product</span>
         </div>
@@ -3354,7 +3306,7 @@
           <div class="props-divider"></div>
 
           <div class="props-fields-group">
-            <div class="props-section-label">Blocks</div>
+            <div class="props-section-label">Elements</div>
             <div class="prop-element-row" onclick="openElementPanel('hero','image','Image')" data-element="image">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 10.5L5 7.5L8 10L10.5 7.5L14.5 11.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5.5" cy="6" r="1.2" fill="currentColor"/></svg>
               <span class="prop-element-row__label">Image</span>
@@ -3626,7 +3578,7 @@
           <div class="props-divider"></div>
 
           <div class="props-fields-group">
-            <div class="props-section-label">Blocks</div>
+            <div class="props-section-label">Elements</div>
             <div class="prop-element-row" onclick="openElementPanel('weekly','header','Section header')" data-element="weekly-header">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4H13M8 4V13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
               <span class="prop-element-row__label">Section header</span>
@@ -3827,7 +3779,7 @@
           <div class="props-divider"></div>
 
           <div class="props-fields-group">
-            <div class="props-section-label">Blocks</div>
+            <div class="props-section-label">Elements</div>
             <div class="prop-element-row" onclick="openElementPanel('curated','header','Section header')" data-element="curated-header">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4H13M8 4V13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
               <span class="prop-element-row__label">Section header</span>
@@ -4133,7 +4085,7 @@
           <div class="props-divider"></div>
 
           <div class="props-fields-group">
-            <div class="props-section-label">Blocks</div>
+            <div class="props-section-label">Elements</div>
             <div class="prop-element-row">
               <svg class="prop-element-row__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="3" width="13" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1.5 10.5L5 7.5L8 10L10.5 7.5L14.5 11.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5.5" cy="6" r="1.2" fill="currentColor"/></svg>
               <span class="prop-element-row__label">Logo</span>
@@ -4567,328 +4519,6 @@
       });
     }
 
-    /* ══════════════════════════════════════════
-       PRE-BUILT SECTION LIBRARY
-    ══════════════════════════════════════════ */
-
-    const IC_IMG = (hash) =>
-      `https://www.instacart.com/image-server/197x197/filters:fill(FFFFFF,true):format(jpg)/d2lnr5mha7bycj.cloudfront.net/product-image/file/large_${hash}.png`;
-
-    const _SECTION_REORDER_BTNS = `
-      <div class="section-reorder">
-        <button class="section-reorder__btn" title="Move down" onclick="event.stopPropagation()">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2.5V11.5M7 11.5L3.5 8M7 11.5L10.5 8" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="section-reorder__btn" title="Move up" onclick="event.stopPropagation()">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 11.5V2.5M7 2.5L3.5 6M7 2.5L10.5 6" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>`;
-
-    const PREBUILT_TEMPLATES = {
-
-      'Hero banner': {
-        outlineLabel: 'Hero Banner',
-        sectionKey: 'hero-banner',
-        html: `
-          <span class="section-hover-label">Hero Banner</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#278657;padding:24px 16px 28px;display:flex;flex-direction:column;gap:14px;">
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:26px;font-weight:700;color:#fff;line-height:1.2;">Fresh picks,<br>delivered fast</div>
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:12px;color:rgba(255,255,255,.85);">Order by noon for same-day delivery to your door.</div>
-            <button style="align-self:flex-start;background:#f8c358;border:none;border-radius:4px;padding:9px 14px;font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:700;color:#242529;cursor:pointer;">Shop now</button>
-          </div>`,
-      },
-
-      'Promo banner': {
-        outlineLabel: 'Promo Banner',
-        sectionKey: 'promo-banner',
-        html: `
-          <span class="section-hover-label">Promo Banner</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#FFF8E6;border-top:2px solid #f8c358;border-bottom:2px solid #f8c358;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
-            <div>
-              <div style="font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:700;color:#242529;">🎉 Members save 20% this week</div>
-              <div style="font-size:11px;color:#56595E;margin-top:2px;">Applied automatically at checkout · Ends Sunday</div>
-            </div>
-            <button style="flex-shrink:0;background:#278657;border:none;border-radius:4px;padding:7px 12px;font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;color:#fff;cursor:pointer;">Claim</button>
-          </div>`,
-      },
-
-      'Product carousel': {
-        outlineLabel: 'Product Carousel',
-        sectionKey: 'product-carousel',
-        html: `
-          <span class="section-hover-label">Product Carousel</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#fff;padding:16px 0 16px 16px;">
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:20px;font-weight:700;color:#278657;margin-bottom:10px;padding-right:16px;">New Arrivals</div>
-            <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;padding-right:16px;scrollbar-width:none;">
-              ${['7d5c22ab-75e1-4695-b702-a9244089fe5b','a8bf1e8f-e7f4-451d-bef8-660b847f2f41','4bc97ed6-d4da-4ed8-908a-7be0b3aba4d8','f2a46a9f-747a-4377-aaf0-f637d30619b5'].map((h,i) => `
-              <div style="width:80px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;">
-                <div style="width:80px;height:80px;border-radius:6px;background:#f5f5f7;position:relative;overflow:hidden;">
-                  <img src="${IC_IMG(h)}" style="width:100%;height:100%;object-fit:contain;" alt="Product ${i+1}">
-                  <button style="position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:100px;background:#f8c358;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#242529;border:none;cursor:pointer;">+</button>
-                </div>
-                <div style="height:7px;border-radius:4px;background:rgba(0,0,0,.12);width:100%;"></div>
-                <div style="height:7px;border-radius:4px;background:rgba(0,0,0,.08);width:60%;"></div>
-              </div>`).join('')}
-            </div>
-          </div>`,
-      },
-
-      'Curated deals': {
-        outlineLabel: 'Curated Deals',
-        sectionKey: 'curated-deals',
-        html: `
-          <span class="section-hover-label">Curated Deals</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#278657;padding:16px 16px 20px;">
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:12px;">Weekend Deals</div>
-            <div style="display:flex;gap:12px;">
-              ${[['4a42a5c6-e220-45a6-a17b-5502e459673d','11a72334-c4b5-48cd-9277-1ed77d2ed716','Shop vegetables'],
-                 ['f8d41060-d036-4265-af91-49e010d5f5eb','e360eecc-326a-4dcb-8ba8-30698d84c55f','Shop organics']].map(([h1,h2,cta]) => `
-              <div style="flex:1;min-width:0;background:#fff;border-radius:6px;padding:10px;display:flex;flex-direction:column;gap:8px;">
-                <div style="font-family:'Josefin Sans',sans-serif;font-size:9px;font-weight:700;color:#001810;">SAVE UP TO 30%</div>
-                <div style="display:flex;gap:6px;">
-                  <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
-                    <div style="width:100%;aspect-ratio:1;border-radius:5px;background:#f5f5f7;overflow:hidden;position:relative;">
-                      <img src="${IC_IMG(h1)}" style="width:100%;height:100%;object-fit:contain;" alt="">
-                      <button style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:100px;background:#f8c358;font-size:10px;font-weight:700;color:#242529;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:3px;"><span style="background:#f8c358;border-radius:2px;padding:1px 3px;font-size:6px;font-weight:700;color:#242529;">SALE</span><div style="height:6px;border-radius:3px;background:rgba(0,0,0,.12);flex:1;"></div></div>
-                  </div>
-                  <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
-                    <div style="width:100%;aspect-ratio:1;border-radius:5px;background:#f5f5f7;overflow:hidden;position:relative;">
-                      <img src="${IC_IMG(h2)}" style="width:100%;height:100%;object-fit:contain;" alt="">
-                      <button style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:100px;background:#f8c358;font-size:10px;font-weight:700;color:#242529;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:3px;"><span style="background:#f8c358;border-radius:2px;padding:1px 3px;font-size:6px;font-weight:700;color:#242529;">SALE</span><div style="height:6px;border-radius:3px;background:rgba(0,0,0,.12);flex:1;"></div></div>
-                  </div>
-                </div>
-                <button style="width:100%;padding:5px;border-radius:4px;background:#278657;border:none;font-family:'Josefin Sans',sans-serif;font-size:7.5px;font-weight:700;color:#fff;cursor:pointer;">${cta}</button>
-              </div>`).join('')}
-            </div>
-          </div>`,
-      },
-
-      'Category grid': {
-        outlineLabel: 'Category Grid',
-        sectionKey: 'category-grid',
-        html: `
-          <span class="section-hover-label">Category Grid</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#fff;padding:16px;">
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:20px;font-weight:700;color:#278657;margin-bottom:12px;">Shop by category</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
-              ${[['🥦','Produce'],['🥩','Meat'],['🥛','Dairy'],['🍞','Bakery'],['🧴','Personal care'],['🧹','Household']].map(([emoji,label]) => `
-              <div style="background:#F5FBF9;border-radius:8px;padding:12px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;">
-                <span style="font-size:22px;">${emoji}</span>
-                <span style="font-size:10px;font-weight:600;color:#343538;line-height:1.2;">${label}</span>
-              </div>`).join('')}
-            </div>
-          </div>`,
-      },
-
-      'Rich text': {
-        outlineLabel: 'Rich Text',
-        sectionKey: 'rich-text',
-        html: `
-          <span class="section-hover-label">Rich Text</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#fff;padding:16px 22px 20px;">
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:22px;font-weight:700;color:#242529;margin-bottom:8px;line-height:1.2;">Why shop with us?</div>
-            <div style="font-size:12px;color:#56595E;line-height:1.6;margin-bottom:16px;">We believe everyone deserves access to fresh, high-quality groceries. Our team hand-picks the finest produce and products so you don't have to—and delivers it straight to your door.</div>
-            <button style="background:#278657;border:none;border-radius:4px;padding:9px 16px;font-family:'Josefin Sans',sans-serif;font-size:12px;font-weight:700;color:#fff;cursor:pointer;">Learn more</button>
-          </div>`,
-      },
-
-      'About us': {
-        outlineLabel: 'About Us',
-        sectionKey: 'about-us',
-        html: `
-          <span class="section-hover-label">About Us</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#fff;padding:16px 22px 20px;overflow:hidden;">
-            <div style="font-family:'Idiqlat',Georgia,serif;font-size:24px;font-weight:400;color:#278657;margin-bottom:12px;">Our story</div>
-            <div style="display:flex;gap:18px;align-items:flex-start;">
-              <div style="flex:1;display:flex;flex-direction:column;gap:10px;overflow:hidden;">
-                <div style="height:120px;border-radius:6px;background:linear-gradient(135deg,#b8ddd4,#278657);"></div>
-                <div style="font-family:'Idiqlat',Georgia,serif;font-size:12px;color:#242529;line-height:1.3;">Farm-to-door freshness</div>
-              </div>
-              <div style="flex:1;display:flex;flex-direction:column;gap:10px;overflow:hidden;">
-                <div style="height:120px;border-radius:6px;background:linear-gradient(135deg,#ecf6f3,#b8ddd4);"></div>
-                <div style="font-family:'Idiqlat',Georgia,serif;font-size:12px;color:#242529;line-height:1.3;">Supporting local growers</div>
-              </div>
-            </div>
-          </div>`,
-      },
-
-      'Reviews': {
-        outlineLabel: 'Reviews',
-        sectionKey: 'reviews',
-        html: `
-          <span class="section-hover-label">Reviews</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#fff;padding:16px 0 16px 16px;">
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:20px;font-weight:700;color:#278657;margin-bottom:12px;padding-right:16px;">What customers say</div>
-            <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;padding-right:16px;scrollbar-width:none;">
-              ${[
-                ['"Always so fresh! Delivery was right on time and everything was perfectly packed."','Sarah M.'],
-                ['"Love the weekly deals. Saved $30 just this month with the member discounts!"','James K.'],
-                ['"The produce quality is unmatched. Feel good about every purchase."','Priya L.'],
-              ].map(([quote,author]) => `
-              <div style="min-width:180px;max-width:190px;flex-shrink:0;background:#FAFAFA;border:1px solid #E8E9EB;border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:6px;">
-                <div style="color:#f8c358;font-size:12px;letter-spacing:1px;">★★★★★</div>
-                <div style="font-size:11px;color:#343538;line-height:1.5;flex:1;">${quote}</div>
-                <div style="font-size:10px;color:#56595E;font-weight:600;">— ${author}</div>
-              </div>`).join('')}
-            </div>
-          </div>`,
-      },
-
-      'Loyalty Tiers': {
-        outlineLabel: 'Loyalty Tiers',
-        sectionKey: 'loyalty-tiers',
-        html: `
-          <span class="section-hover-label">Loyalty Tiers</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#fff;padding:16px 16px 20px;">
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:20px;font-weight:700;color:#278657;margin-bottom:12px;">Loyalty Tiers</div>
-            <div style="display:flex;flex-direction:column;gap:8px;">
-              <div style="background:#FFF8F0;border:1px solid #F6C59A;border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px;">
-                <div style="width:32px;height:32px;border-radius:50%;background:#CD7F32;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🥉</div>
-                <div style="flex:1;">
-                  <div style="font-size:12px;font-weight:700;color:#242529;">Bronze</div>
-                  <div style="font-size:10px;color:#56595E;">0 – 499 pts · 3% cash back</div>
-                </div>
-                <div style="font-size:10px;font-weight:600;color:#CD7F32;background:#FFF0E0;padding:3px 8px;border-radius:999px;">Current</div>
-              </div>
-              <div style="background:#F8F8FA;border:1px solid #D5D7DA;border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px;">
-                <div style="width:32px;height:32px;border-radius:50%;background:#A8A9AD;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🥈</div>
-                <div style="flex:1;">
-                  <div style="font-size:12px;font-weight:700;color:#242529;">Silver</div>
-                  <div style="font-size:10px;color:#56595E;">500 – 1,999 pts · 5% cash back</div>
-                </div>
-                <div style="font-size:10px;color:#A8A9AD;font-weight:500;">260 pts away</div>
-              </div>
-              <div style="background:#FFFBF0;border:1px solid #F0CF80;border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px;">
-                <div style="width:32px;height:32px;border-radius:50%;background:#D4AF37;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🥇</div>
-                <div style="flex:1;">
-                  <div style="font-size:12px;font-weight:700;color:#242529;">Gold</div>
-                  <div style="font-size:10px;color:#56595E;">2,000+ pts · 8% cash back + perks</div>
-                </div>
-              </div>
-            </div>
-          </div>`,
-      },
-
-      'Loyalty Rewards': {
-        outlineLabel: 'Loyalty Rewards',
-        sectionKey: 'loyalty-rewards',
-        html: `
-          <span class="section-hover-label">Loyalty Rewards</span>
-          ${_SECTION_REORDER_BTNS}
-          <div style="background:#fff;padding:16px;">
-            <div style="font-family:'Josefin Sans',sans-serif;font-size:20px;font-weight:700;color:#278657;margin-bottom:12px;">Your Rewards</div>
-            <div style="background:#ECF6F3;border-radius:10px;padding:14px;margin-bottom:10px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                <span style="font-size:10px;font-weight:600;color:#56595E;text-transform:uppercase;letter-spacing:0.04em;">Current Points</span>
-                <span style="font-size:18px;font-weight:700;color:#278657;">1,240</span>
-              </div>
-              <div style="height:6px;background:rgba(0,0,0,.1);border-radius:3px;overflow:hidden;margin-bottom:5px;">
-                <div style="width:62%;height:100%;background:#278657;border-radius:3px;"></div>
-              </div>
-              <div style="display:flex;justify-content:space-between;">
-                <span style="font-size:9px;color:#56595E;">Silver (1,000 pts)</span>
-                <span style="font-size:9px;color:#56595E;">Gold (2,000 pts)</span>
-              </div>
-            </div>
-            <div style="display:flex;gap:8px;">
-              <div style="flex:1;background:#fff;border:1px solid #E8E9EB;border-radius:8px;padding:10px;text-align:center;">
-                <div style="font-size:16px;font-weight:700;color:#278657;">$15</div>
-                <div style="font-size:10px;color:#56595E;">Reward credit</div>
-              </div>
-              <div style="flex:1;background:#fff;border:1px solid #E8E9EB;border-radius:8px;padding:10px;text-align:center;">
-                <div style="font-size:16px;font-weight:700;color:#278657;">3</div>
-                <div style="font-size:10px;color:#56595E;">Active coupons</div>
-              </div>
-              <div style="flex:1;background:#fff;border:1px solid #E8E9EB;border-radius:8px;padding:10px;text-align:center;">
-                <div style="font-size:16px;font-weight:700;color:#278657;">🥈</div>
-                <div style="font-size:10px;color:#56595E;">Silver tier</div>
-              </div>
-            </div>
-          </div>`,
-      },
-    };
-
-    let _addedSectionIdx = 0;
-
-    function addPrebuiltSection(name) {
-      const config = PREBUILT_TEMPLATES[name];
-      if (!config) { closeAddPanel(); return; }
-
-      _addedSectionIdx++;
-      const zoneId = `added-zone-${_addedSectionIdx}`;
-
-      // Build section-hover-zone
-      const zone = document.createElement('div');
-      zone.id = zoneId;
-      zone.className = 'section-hover-zone';
-      zone.dataset.section = config.sectionKey + '-' + _addedSectionIdx;
-      zone.innerHTML = config.html;
-
-      // Wire up hover/click events
-      zone.addEventListener('mouseenter', () => showActions(zone));
-      zone.addEventListener('mouseleave', scheduleHideActions);
-      zone.addEventListener('click',      () => selectCanvasSection(zone));
-
-      // Insert before about-zone so it appears naturally in the body
-      const frame     = document.getElementById('device-frame');
-      const aboutZone = document.getElementById('about-zone');
-      if (aboutZone) frame.insertBefore(zone, aboutZone);
-      else            frame.appendChild(zone);
-
-      // Add an outline item in the Body section before the Add-section button
-      const outlineContainer = document.getElementById('outline-body-container');
-      const addBtn           = document.getElementById('outline-body-add-btn');
-      if (outlineContainer && addBtn) {
-        const item = document.createElement('div');
-        item.className = 'outline-item outline-item--flash';
-        item.innerHTML = `
-          <span class="outline-item__icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2.5 4.5H13.5M2.5 8H11M2.5 11.5H12.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="outline-item__label">${config.outlineLabel}</span>
-          <button class="outline-item__vis" title="Toggle visibility" onclick="event.stopPropagation();this.classList.toggle('hidden')">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M1 7C1 7 3 3 7 3C11 3 13 7 13 7C13 7 11 11 7 11C3 11 1 7 1 7Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-              <circle cx="7" cy="7" r="1.5" stroke="currentColor" stroke-width="1.2"/>
-            </svg>
-          </button>`;
-        item.addEventListener('click', () => {
-          document.querySelectorAll('.outline-item, .outline-subitem').forEach(i => i.classList.remove('active'));
-          item.classList.add('active');
-          selectCanvasSection(zone);
-          const canvas   = document.getElementById('canvas');
-          const zoneRect = zone.getBoundingClientRect();
-          const canvasRect = canvas.getBoundingClientRect();
-          canvas.scrollBy({ top: zoneRect.top - canvasRect.top - 24, behavior: 'smooth' });
-        });
-        outlineContainer.insertBefore(item, addBtn);
-      }
-
-      // Close add panel and scroll to the new section
-      closeAddPanel();
-      setTimeout(() => {
-        const canvas    = document.getElementById('canvas');
-        const zoneRect  = zone.getBoundingClientRect();
-        const canvasRect = canvas.getBoundingClientRect();
-        canvas.scrollBy({ top: zoneRect.top - canvasRect.top - 24, behavior: 'smooth' });
-      }, 180);
-    }
-
     // Close panels when clicking canvas background
     document.getElementById('canvas').addEventListener('click', () => {
       if (outlineAddView.style.display === 'flex') closeAddPanel();
@@ -4917,196 +4547,16 @@
       }
     }
 
-    let _addBlockTargetZone = null;
-
     function openAddElementPanel(sectionId, sectionLabel) {
       // Only one right-panel open at a time
       closePropPanel();
       actionsPopup.classList.remove('visible');
-
-      // Capture target zone: prefer activeZone (hover popup path), else selectedZone
-      _addBlockTargetZone = activeZone || selectedZone || null;
-
-      // Update the "Adding to:" label
-      const nameEl = document.getElementById('add-block-target-name');
-      if (nameEl) {
-        if (_addBlockTargetZone) {
-          // Use the hover-label text if present, else sectionLabel arg, else zone id
-          const labelEl = _addBlockTargetZone.querySelector('.section-hover-label');
-          nameEl.textContent = (labelEl && labelEl.textContent.trim()) ||
-                               sectionLabel ||
-                               (_addBlockTargetZone.dataset.section || 'Section');
-        } else if (sectionLabel) {
-          nameEl.textContent = sectionLabel;
-        } else {
-          nameEl.textContent = '—';
-        }
-      }
-
       positionAddBlocksPanel();
       addElementPanel.classList.add('open');
     }
 
     function closeAddElementPanel() {
       addElementPanel.classList.remove('open');
-    }
-
-    /* ── Block templates ── */
-    const _IC = (h) =>
-      `https://www.instacart.com/image-server/197x197/filters:fill(FFFFFF,true):format(jpg)/d2lnr5mha7bycj.cloudfront.net/product-image/file/large_${h}.png`;
-
-    const BLOCK_TEMPLATES = {
-      Text: () => {
-        const el = document.createElement('div');
-        el.className = 'injected-block injected-block--new';
-        el.style.cssText = 'padding:10px 0;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <p style="font-size:13px;color:inherit;line-height:1.6;font-family:inherit;margin:0;opacity:0.85;">
-            Add your text here. Click to edit this block and customize the content for your audience.
-          </p>`;
-        return el;
-      },
-      Button: () => {
-        const el = document.createElement('div');
-        el.className = 'injected-block injected-block--new';
-        el.style.cssText = 'padding:10px 0;display:flex;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <button style="background:#f8c358;border:none;border-radius:4px;padding:9px 18px;font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:700;color:#242529;cursor:pointer;">
-            Button label
-          </button>`;
-        return el;
-      },
-      Divider: () => {
-        const el = document.createElement('div');
-        el.className = 'injected-block injected-block--new';
-        el.style.cssText = 'padding:10px 0;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <hr style="border:none;border-top:1px solid rgba(128,128,128,0.35);margin:0;">`;
-        return el;
-      },
-      Image: () => {
-        const el = document.createElement('div');
-        el.className = 'injected-block injected-block--new';
-        el.style.cssText = 'padding:8px 0;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div style="width:100%;height:110px;background:rgba(0,0,0,.15);border-radius:8px;border:2px dashed rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;cursor:pointer;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/><path d="M2 15l6-6 6 6 3-3 5 5" stroke="rgba(255,255,255,.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="9.5" r="1.5" stroke="rgba(255,255,255,.6)" stroke-width="1.2"/></svg>
-            <span style="font-size:11px;color:rgba(255,255,255,.6);font-family:inherit;">Click to upload image</span>
-          </div>`;
-        return el;
-      },
-      Video: () => {
-        const el = document.createElement('div');
-        el.className = 'injected-block injected-block--new';
-        el.style.cssText = 'padding:8px 16px;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div style="width:100%;height:110px;background:#1C1C1E;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:8px;">
-            <div style="width:40px;height:40px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4.5 3l8 4-8 4V3z" fill="white"/></svg>
-            </div>
-            <span style="font-size:10px;color:rgba(255,255,255,.5);font-family:inherit;">Add video URL</span>
-          </div>`;
-        return el;
-      },
-      Icon: () => {
-        const el = document.createElement('div');
-        el.className = 'injected-block injected-block--new';
-        el.style.cssText = 'padding:10px 0;display:flex;align-items:center;gap:10px;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div style="width:36px;height:36px;background:rgba(255,255,255,.18);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1.5l2.25 4.5 5 .73-3.625 3.53.855 4.975L9 12.75l-4.48 2.455.855-4.975L1.75 6.73l5-.73L9 1.5z" stroke="rgba(255,255,255,.85)" stroke-width="1.3" stroke-linejoin="round"/></svg>
-          </div>
-          <span style="font-size:13px;color:rgba(255,255,255,.9);font-family:inherit;">Icon label</span>`;
-        return el;
-      },
-      Links: () => {
-        const el = document.createElement('div');
-        el.className = 'injected-block injected-block--new';
-        el.style.cssText = 'padding:10px 0;display:flex;flex-direction:column;gap:8px;';
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <a href="#" style="font-size:12px;color:rgba(255,255,255,.9);text-decoration:underline;font-weight:600;font-family:inherit;" onclick="return false;">Learn more →</a>
-          <a href="#" style="font-size:12px;color:rgba(255,255,255,.9);text-decoration:underline;font-weight:600;font-family:inherit;" onclick="return false;">Terms &amp; Conditions</a>
-          <a href="#" style="font-size:12px;color:rgba(255,255,255,.9);text-decoration:underline;font-weight:600;font-family:inherit;" onclick="return false;">Privacy Policy</a>`;
-        return el;
-      },
-      Product: () => {
-        const el = document.createElement('div');
-        el.className = 'injected-block injected-block--new';
-        el.style.cssText = 'padding:8px 0 8px 16px;';
-        const imgs = [
-          '7d5c22ab-75e1-4695-b702-a9244089fe5b',
-          'a8bf1e8f-e7f4-451d-bef8-660b847f2f41',
-          '4bc97ed6-d4da-4ed8-908a-7be0b3aba4d8',
-        ];
-        const cards = imgs.map((h, i) => `
-          <div style="width:80px;flex-shrink:0;display:flex;flex-direction:column;gap:5px;">
-            <div style="width:80px;height:80px;border-radius:6px;background:#f5f5f7;position:relative;overflow:hidden;">
-              <img src="${_IC(h)}" style="width:100%;height:100%;object-fit:contain;" alt="Product ${i+1}">
-              <button style="position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:100px;background:#f8c358;font-size:11px;font-weight:700;color:#343538;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
-            </div>
-            <div style="height:6px;border-radius:3px;background:rgba(0,0,0,.12);width:100%;"></div>
-            <div style="height:6px;border-radius:3px;background:rgba(0,0,0,.08);width:60%;"></div>
-          </div>`).join('');
-        el.innerHTML = `
-          <button class="injected-block__delete" onclick="this.closest('.injected-block').remove()" title="Remove block">
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 1.5l7 7M8.5 1.5l-7 7" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-          <div style="display:flex;gap:10px;overflow-x:auto;padding-right:16px;padding-bottom:2px;scrollbar-width:none;">${cards}</div>`;
-        return el;
-      },
-    };
-
-    function addBlock(type) {
-      const zone = _addBlockTargetZone || selectedZone;
-      if (!zone) { closeAddElementPanel(); return; }
-
-      const factory = BLOCK_TEMPLATES[type];
-      if (!factory) { closeAddElementPanel(); return; }
-
-      const block = factory();
-
-      // Find the last native content child of the zone:
-      // skip .section-hover-label, .section-reorder, and already-injected blocks
-      // so the block lands INSIDE the section's own content container —
-      // inheriting its background, padding, and layout.
-      const SKIP = ['section-hover-label', 'section-reorder', 'injected-block'];
-      const children = Array.from(zone.children);
-      let container = null;
-      for (let i = children.length - 1; i >= 0; i--) {
-        const c = children[i];
-        if (!SKIP.some(cls => c.classList.contains(cls))) {
-          container = c;
-          break;
-        }
-      }
-
-      (container || zone).appendChild(block);
-
-      // Scroll block into view
-      setTimeout(() => block.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
-
-      closeAddElementPanel();
     }
 
     /* ── Spacing controls ── */
