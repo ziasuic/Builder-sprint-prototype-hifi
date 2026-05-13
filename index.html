@@ -3694,17 +3694,16 @@
         <!-- Weekly: Product carousel element -->
         <div class="section-view element-view" id="view-weekly-carousel" style="display:none">
 
-          <!-- Product source -->
+          <!-- Content type -->
           <div class="props-fields-group">
-            <div class="props-section-label">Product source</div>
+            <div class="props-section-label">Content type</div>
             <div class="prop-seg">
-              <button class="prop-seg__btn active" onclick="switchCarouselMode(this,'weekly','auto')">Best match</button>
-              <button class="prop-seg__btn" onclick="switchCarouselMode(this,'weekly','fixed')">Collection</button>
+              <button class="prop-seg__btn active" onclick="switchCarouselMode(this,'weekly','fixed')">Static</button>
               <button class="prop-seg__btn" onclick="switchCarouselMode(this,'weekly','dynamic')">Dynamic</button>
             </div>
 
-            <!-- Best match mode (default) -->
-            <div class="source-mode-panel" id="weekly-source-auto">
+            <!-- (removed: Best match mode) -->
+            <div class="source-mode-panel" id="weekly-source-auto" hidden>
               <div class="auto-resolved-card">
                 <div class="auto-resolved-card__label">
                   <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
@@ -3718,8 +3717,8 @@
               </div>
             </div>
 
-            <!-- Collection mode (hidden by default) -->
-            <div class="source-mode-panel" id="weekly-source-fixed" hidden>
+            <!-- Static mode (default) -->
+            <div class="source-mode-panel" id="weekly-source-fixed">
               <div class="props-field">
                 <div class="props-field-label">Collection</div>
                 <select class="prop-select">
@@ -3903,17 +3902,16 @@
         <!-- Curated: Product carousel element -->
         <div class="section-view element-view" id="view-curated-carousel" style="display:none">
 
-          <!-- Product source -->
+          <!-- Content type -->
           <div class="props-fields-group">
-            <div class="props-section-label">Product source</div>
+            <div class="props-section-label">Content type</div>
             <div class="prop-seg">
-              <button class="prop-seg__btn active" onclick="switchCarouselMode(this,'curated','auto')">Best match</button>
-              <button class="prop-seg__btn" onclick="switchCarouselMode(this,'curated','fixed')">Collection</button>
+              <button class="prop-seg__btn active" onclick="switchCarouselMode(this,'curated','fixed')">Static</button>
               <button class="prop-seg__btn" onclick="switchCarouselMode(this,'curated','dynamic')">Dynamic</button>
             </div>
 
-            <!-- Best match mode (default) -->
-            <div class="source-mode-panel" id="curated-source-auto">
+            <!-- (removed: Best match mode) -->
+            <div class="source-mode-panel" id="curated-source-auto" hidden>
               <div class="auto-resolved-card">
                 <div class="auto-resolved-card__label">
                   <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
@@ -3927,8 +3925,8 @@
               </div>
             </div>
 
-            <!-- Collection mode (hidden by default) -->
-            <div class="source-mode-panel" id="curated-source-fixed" hidden>
+            <!-- Static mode (default) -->
+            <div class="source-mode-panel" id="curated-source-fixed">
               <div class="props-field">
                 <div class="props-field-label">Collection</div>
                 <select class="prop-select">
@@ -5470,7 +5468,7 @@
       seg.querySelectorAll('.prop-seg__btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Hide all three mode panels, then reveal the active one
+      // Hide all mode panels, then reveal the active one
       ['auto', 'fixed', 'dynamic'].forEach(m => {
         const panel = document.getElementById(section + '-source-' + m);
         if (panel) panel.setAttribute('hidden', '');
